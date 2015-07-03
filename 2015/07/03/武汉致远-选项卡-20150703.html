@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡</title>
+	<style>
+		/*面向过程
+		ul{list-style: none;}
+		#nav>li{display: inline-block;cursor: pointer;}
+		#nav>li:hover{background-color: #ccc}
+		#content>li:not(:first-child){display: none;}
+		.active{border: 1px solid #ccc;}
+		*/
+		/*面向对象*/
+		*{font-size: 24px}
+		ul{list-style: none;}
+		.active{border: 1px solid #ccc;}
+	</style>
+	<script>
+		// 面向过程
+		// window.onload = function(){
+		// 	var tablis = document.getElementById("nav").getElementsByTagName("li");
+		// 	var contentlis = document.getElementById("content").getElementsByTagName("li");
+		// 	for(var i=0,l=tablis.length;i<l;i++){
+		// 		tablis[i].index = i;
+		// 		tablis[i].onclick = tablis[i].ontouchstart = function(){
+		// 			for(var j = 0;j<tablis.length;j++){
+		// 				tablis[j].className='';
+		// 			}
+		//			this.className='active';
+		// 			for(var j = 0;j<contentlis.length;j++){
+		// 				contentlis[j].style.display = 'none';
+		// 			}
+		// 			contentlis[this.index].style.display = 'block';
+		// 		}
+		// 	}
+		// }
+		var Tab = function(id){
+			this.id = typeof id == "string"?document.getElementById(id):id;
+			this.ul = this.id.getElementsByTagName('ul');
+			this.nav = this.ul[0].getElementsByTagName('li');
+			this.cont = this.ul[1].getElementsByTagName('li');
+			this.init();
+		}
+		Tab.prototype.init = function(){
+			for(var k = 0;k<this.nav.length;k++){
+				var that = this;
+				that.nav[k].index = k;
+				that.nav[k].style.display = 'inline-block';
+				that.nav[k].style.cursor = 'pointer';
+				that.nav[k].onclick = that.nav[k].ontouchstart = function(){
+					that.show(this.index);
+				}
+			}
+			this.show(0);
+		}
+		Tab.prototype.show = function(index){
+			for(var i = 0;i<this.nav.length;i++){
+				this.nav[i].className = '';
+			}
+			this.nav[index].className = 'active';
+			for(var i = 0;i<this.cont.length;i++){
+				this.cont[i].style.display = 'none';
+			}
+			this.cont[index].style.display = 'block';
+		}
+		window.onload = function(){
+			new Tab("tab");
+			new Tab("tab1");
+		}
+	</script>
+</head>
+<body>
+	<!-- 面向过程 -->
+	<!-- <div id="tab">
+		<ul id="nav">
+			<li class="active">tab1</li>
+			<li >tab2</li>
+			<li >tab3</li>
+		</ul>
+		<ul id = "content">
+			<li>this is tab1</li>
+			<li>this is tab2</li>
+			<li>this is tab3</li>
+		</ul>
+	</div> -->
+	<!-- 面向对象 -->
+	<div id="tab">
+		<ul>
+			<li >tab1</li>
+			<li >tab2</li>
+			<li >tab3</li>
+		</ul>
+		<ul>
+			<li>this is tab1</li>
+			<li>this is tab2</li>
+			<li>this is tab3</li>
+		</ul>
+	</div>
+	<div id="tab1">
+		<ul>
+			<li >tab1</li>
+			<li >tab2</li>
+			<li >tab3</li>
+		</ul>
+		<ul>
+			<li>this is tab1</li>
+			<li>this is tab2</li>
+			<li>this is tab3</li>
+		</ul>
+	</div>
+</body>
+</html>
