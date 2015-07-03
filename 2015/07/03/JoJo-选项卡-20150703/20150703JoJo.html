@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            *, ::before, ::after {
+                margin: 0;
+                padding: 0;
+                font-size: 24px;
+            }
+
+            .container {
+                height: 10rem;
+                width: 30rem;
+                margin: 2rem;
+            }
+
+        </style>
+    <link rel="stylesheet" href="tags.css" />
+    </head>
+    <body>
+        <div class="container"></div>
+    </body>
+    <script>
+    var list = [{
+        "tag": "选项卡一",
+        "content": "这个是选项卡一"
+    }, {
+        "tag": "选项卡二",
+        "content": "这个是选项卡二"
+    }, {
+        "tag": "选项卡三",
+        "content": "这个是选项卡三"
+    }, {
+        "tag": "选项卡四",
+        "content": "这个是选项卡四"
+    }, {
+        "tag": "选项卡五",
+        "content": "这个是选项卡五"
+    }];
+
+    function SetTags(arg) {
+        this.container = arg.container;
+        this.list = arg.list;
+
+        this.container.style.position = "relative";
+
+        this.set();
+        
+        this.container.addEventListener("mouseover", function(e) {
+            if (e.target.tagName !== "LI") return;
+            this.changeTag(e.target);
+        }.bind(this));
+        this.container.addEventListener("touchstart", function(e) {
+            if(e.touches.length>1||e.target.tagName !== "LI") return;
+            this.changeTag(e.target);
+        }.bind(this));
+    }
+
+    SetTags.prototype.changeTag = function(target) {
+        target.style.borderBottomColor = "#fff";
+        target.children[0].style.display = "block";
+        var sibling = Array.prototype.filter.call(target.parentNode.children, function(child) {
+            return child !== target;
+        });
+        sibling.forEach(function(item) {
+            item.style.borderBottomColor = "#bbb";
+            item.children[0].style.display = "none";
+        })
+    }
+
+    SetTags.prototype.set = function(e) {
+        var ul = document.createElement("ul");
+        ul.className = "joeTags";
+        this.list.forEach(function(item) {
+            var li = document.createElement("li");
+            li.innerText = item.tag;
+            var content = document.createElement("div");
+            content.innerText = item.content;
+            content.style.width = this.container.clientWidth + "px";
+            content.style.height = this.container.clientHeight + "px";
+            li.appendChild(content);
+            ul.appendChild(li);
+        }.bind(this));
+
+        this.container.appendChild(ul);
+    }
+
+     new SetTags({
+        "container": document.querySelector(".container"),
+        "list": list
+    });
+    </script>
+</html>
