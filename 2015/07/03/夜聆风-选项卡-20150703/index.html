@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="cn">
+    <meta charset="UTF-8">
+    <title>夜聆风-选项卡</title>
+    <link rel="stylesheet" href="css/tab.css"/>
+    <link rel="stylesheet" href="css/animate.css"/>
+</head>
+<body>
+
+
+
+<div class="container">
+    <div class="tabWapper">
+        <div class="tabs">
+            <div class="tab on" rel="base">tab1<i class="arrow"></i></div>
+            <div class="tab" rel="dynamic">tab2<i class="arrow"></i></div>
+        </div>
+        <div class="contents">
+            <div class="content" id="base">
+                <p>
+                    用面向过程就是普通的方式写一个选项卡
+                    用面向对象的方式写一个选项卡
+                    添加touchstart,touchmove事件支持，就是支持移动端。
+                    选项卡可以多处重复调用。
+                </p>
+
+            </div>
+            <div class="content " id="dynamic" style="display: none;">
+                <p>
+                    一周周日一次发布，周日12.00之前截止。比如本周的作业在7.12日前提交。
+                    代码可由任何一个成员审核并提交注释修改。
+                    提交方式，先fork，然后checkout，然后新创建文件： 群名片+标题+日期，比如：豪情-选项卡-20150703，然后commit，个人的文件统一放在一个文件里边，然后push到自己的仓库，push完了，登录github，后在github上pull request到我的仓库。
+                    不会用git命令行的，可以用webstorm，会用的略过。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/tab.js" type="text/javascript"></script>
+<script>
+
+    $(document).ready(function(){
+        var data = [{
+            'id': 'tab1',
+            'text': "选项卡1",
+            'content': '用面向过程就是普通的方式写一个选项卡 ' + '用面向对象的方式写一个选项卡' + '添加touchstart,touchmove事件支持，就是支持移动端。' + '选项卡可以多处重复调用。'
+        },
+        {
+            'id': 'tab2',
+            'text': "选项卡1",
+            'content': '  一周周日一次发布，周日12.00之前截止。比如本周的作业在7.12日前提交。\
+              代码可由任何一个成员审核并提交注释修改。\
+              提交方式，先fork，然后checkout，然后新创建文件： 群名片+标题+日期，比如：豪情-选项卡-20150703，然后commit，个人的文件统一放在一个文件里边，然后push到自己的仓库，push完了，登录github，后在github上pull request到我的仓库。\
+              不会用git命令行的，可以用webstorm，会用的略过。'
+        },
+        {
+            'id': 'tab3',
+            'text': "选项卡3",
+            'content': '亲 喜欢点个攒吧'
+        }];
+
+        // 面向对象
+        var tab = new Tab({
+            data : data,
+            parent :".container",
+            callback : function(me){
+                console.log("控件加载完了");
+                console.log(me);
+            }
+        });
+
+
+        // 面向过程
+        $(".tabs .tab").click(function(){
+            var me = $(this);
+            me.siblings().removeClass("on").end().addClass("on");
+            var rel = me.attr("rel");
+            if(rel == "base"){
+                $("#base").show().addClass("fadeIn animated");
+                $("#dynamic").hide().removeClass("fadeIn animated");
+            }else{
+                $("#base").hide().removeClass("fadeIn animated");
+                $("#dynamic").show().addClass("fadeIn animated");
+            }
+
+        });
+    });
+</script>
+</body>
+</html>
