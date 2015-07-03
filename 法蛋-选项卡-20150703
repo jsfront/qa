@@ -3,11 +3,51 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+<style>
+body{ margin:0;}
+ul{ margin:0; padding:0;}
+li { list-style:none;}
+#optNav li{ float:left; display:inline-block; margin:10px; cursor:pointer;}
+#optCon{ clear:both; margin:10px; width:400px; height:300px; border:1px solid #ccc;}
+.opt1,.opt2,.opt3{ display:none;}
+#optNav .active{ background:#ccc;}
+#optCon div{ display:none;}
+#optCon .active{ display:block;}
+</style>
 </head>
 <body>
+<div id="wraper">
+	<ul id="optNav">
+    	<li class="active">选项一</li>
+    	<li>选项二</li>
+    	<li>选项三</li>	
+	</ul>
+    <div id="optCon">
+    	<div class="opt1 active">选项一里的内容</div>
+    	<div class="opt2">选项二里的内容</div>
+    	<div class="opt3">选项三里的内容</div>
+    </div>
+</div>
 
 <script>
 
+	var optCli=document.getElementById("optNav").getElementsByTagName("li");//获取导航里的li
+	var optCon=document.getElementById("optCon").getElementsByTagName("div");//获取内容块里的div
+	var i=0,j=0;
+	for(;i<optCli.length;i++)
+	{
+		optCli[i].index=i;//定义一个index来控制内容块里div
+		optCli[i].onclick=function(){
+			
+			for(var j=0;j<optCli.length;j++)
+			{
+				optCli[j].className="";//清除所有optNav里面li的class
+				optCon[j].className="";//清除所有optCon里面div的class
+			}
+			this.className="active";//当前点击的li加上active类名
+			optCon[this.index].className="active";//下面对应的div也加上active类名
+			}
+	}	
 </script>
 </body>
 </html>
