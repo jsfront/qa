@@ -1,3 +1,26 @@
+/**
+ * 　　　　　　　　┏┓　　　┏┓
+ * 　　　　　　　┏┛┻━━━┛┻┓
+ * 　　　　　　　┃　　　　　　　┃ 　
+ * 　　　　　　　┃　　　━　　　┃
+ * 　　　　　　　┃　＞　　　＜　┃
+ * 　　　　　　　┃　　　　　　　┃
+ * 　　　　　　　┃...　⌒　...　┃
+ * 　　　　　　　┃　　　　　　　┃
+ * 　　　　　　　┗━┓　　　┏━┛
+ * 　　　　　　　　　┃　　　┃　Code is far away from bug with the animal protecting　　　　　　　　　　
+ * 　　　　　　　　　┃　　　┃   神兽保佑,代码无bug
+ * 　　　　　　　　　┃　　　┃　　　　　　　　　　　
+ * 　　　　　　　　　┃　　　┃  　　　　　　
+ * 　　　　　　　　　┃　　　┃
+ * 　　　　　　　　　┃　　　┃　　　　　　　　　　　
+ * 　　　　　　　　　┃　　　┗━━━┓
+ * 　　　　　　　　　┃　　　　　　　┣┓
+ * 　　　　　　　　　┃　　　　　　　┏┛
+ * 　　　　　　　　　┗┓┓┏━┳┓┏┛
+ * 　　　　　　　　　　┃┫┫　┃┫┫
+ * 　　　　　　　　　　┗┻┛　┗┻┛
+ * */
 ;(function(){
 	var defaultConf={
 		selector:"", //选择符
@@ -32,18 +55,26 @@
         self.contentsArr=Array.prototype.slice.call(self.$contents,0);
 
 		// 事件绑定一下
-		$S(".tab",self.$container)[0].addEventListener("click",function(e){
+		document.addEventListener("click",_tapToChange,false);
+        //TODO 这里偷懒就只写了touchend，有时间再完善
+        document.addEventListener("touchend",_tapToChange,false);
+
+        //点击切换到对应的选项卡
+        function _tapToChange(e){
             var $target=e.target;
+
+            // 让它丫的手机端解绑click事件
+            if(e.type=="touchend"){
+                document.removeEventListener("click",_tapToChange);
+            }
 
             self.tabsArr.forEach(function(tab,index){
                 if($target===tab){
                     self.changeTo(index);
                     self.curIndex=index;
                 }
-            })
-		},false);
-
-        console.log(self)
+            });
+        }
 	}
 
 	// 切换到第X个选项卡
@@ -59,14 +90,14 @@
 		self.$contents[changeto].style.display="block";
 	}
 
-	// 这是选择器呀
+	// 没有zepto，自己写一个简单的选择器吧（不支持那些TMD低级弱智的浏览器）
     function $S(selector, parentsNode) {
         parentsNode ? parentsNode = parentsNode : parentsNode = document;
         var ele = parentsNode.querySelectorAll(selector);
         return ele;
     }
 
-    // 合并对象呗
+    // 跟$.extend()长的像，也自己撸一个
     function extend() {
         var _extend = function(dest, source) {
             for (var name in dest) {
