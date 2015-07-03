@@ -1,7 +1,0 @@
-.joeTags { position: relative; height: inherit; }
-.joeTags li { list-style: none; display: inline-block; text-align: center; width: 5rem; border: .1rem solid #bbb; }
-.joeTags li div { z-index: -1; overflow: auto; position: absolute; left: 0; display: none; border: .1rem solid #aaa; }
-.joeTags li:first-child { border-bottom: .1rem solid #fff; }
-.joeTags li:first-child div { display: block; }
-
-/*# sourceMappingURL=tags.css.map */
