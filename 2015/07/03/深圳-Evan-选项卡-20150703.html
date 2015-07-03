@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+
+    <title></title>
+    <style>
+        html, body{
+            margin:0;
+            padding:0;
+        }
+        .container {
+            width: 750px;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+
+            margin-bottom:15px;
+        }
+        .tabs, .tabs ul,.tabs li {
+            padding:0;
+            margin:0;
+        }
+        .tabs > .tabs-title > li {
+            display:inline-block;
+            float:left;
+            border:1px solid #8c8c8c;
+            border-radius:12px;
+            padding:12px;
+            width:29%;
+            text-align: center;
+            cursor: pointer;
+        }
+        .tabs > .tabs-title > li.active{
+            background-color:#8c8c8c;
+            color:white;
+        }
+        .tabs > .tabs-title:after{
+            display:block;
+            clear:both;
+            content:"";
+            visibility: hidden;
+            height:0;
+        }
+        .tabs > .tabs-content > div{
+            display:none;
+        }
+        .tabs > .tabs-content > div.active{
+            display:block;
+        }
+
+        @media screen and (max-width: 960px){
+            .container {
+                width: 100%;
+                padding:0;
+                margin:0;
+            }
+            .tabs > .tabs-title > li {
+                width : 20%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <ul class="tabs-title">
+                <li class="active">AAA</li>
+                <li>BBB</li>
+                <li>CCC</li>
+            </ul>
+            <div class="tabs-content">
+                <div class="active">AAA</div>
+                <div>BBB</div>
+                <div>CCC</div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="tabs">
+            <ul class="tabs-title">
+                <li class="active">AAA</li>
+                <li>BBB</li>
+                <li>CCC</li>
+            </ul>
+            <div class="tabs-content">
+                <div class="active">AAA</div>
+                <div>BBB</div>
+                <div>CCC</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var tabs = (function(){
+
+            function lisBindEv ( target ) {
+                var i = 0;
+                var lis = target.getElementsByClassName('tabs-title')[0].getElementsByTagName('li');
+                var divs = target.getElementsByClassName('tabs-content')[0].getElementsByTagName('div');
+
+                function switchPage(){
+                    var j = 0;
+                    for ( j = 0; j< lis.length; j++ ){
+                        lis[j].className = '';
+                        divs[j].className = '';
+                    }
+                    this.className = 'active';
+                    divs[this.index].className = 'active';
+                }
+
+                for ( i = 0; i < lis.length ; i++ ){
+                    lis[i].index = i;
+                    lis[i].onclick = switchPage;
+                    lis[i].addEventListener('touchstart', switchPage, false);
+                }
+            }
+
+            function bindEv () {
+                var i = 0;
+                var tabs = document.getElementsByClassName('tabs');
+                for ( i = 0; i < tabs.length; i++ ){
+                    lisBindEv(tabs[i]);
+                }
+            }
+
+            function init () {
+                bindEv();
+            }
+
+            return { init : init };
+
+        })();
+
+        tabs.init();
+    </script>
+</body>
+</html>
