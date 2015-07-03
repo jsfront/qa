@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" href="tab.css">
+    <style>
+    .page{width:96%;margin:20px auto;}
+    #j-tab2{margin-top:50px;}
+    </style>
+</head>
+<body>
+	<section class="page">
+		<section class="tab-container" id="j-tab1">
+			<div class="tab clearfix">  
+		        <a href="javascript:;">选项卡一</a>  
+		        <a href="javascript:;">选项卡二</a>  
+		        <a href="javascript:;">选项卡三</a>  
+		    </div>
+		    <div class="tab-content">  
+		        <div class="tc">选项卡一</div>
+		        <div class="tc">选项卡二</div>  
+		        <div class="tc">选项卡三</div>  
+		    </div>
+		</section>
+
+		<section class="tab-container" id="j-tab2">
+			<div class="tab clearfix">  
+		        <a href="javascript:;">选项卡一</a>  
+		        <a href="javascript:;">选项卡二</a>  
+		        <a href="javascript:;">选项卡三</a>  
+		    </div>
+		    <div class="tab-content">  
+		        <div class="tc">选项卡一</div>
+		        <div class="tc">选项卡二，我最先被初始化</div>  
+		        <div class="tc">选项卡三</div>  
+		    </div>
+		</section>
+	</section>
+
+	<script src="tab.js"></script>
+	<script>
+	var tab1=new Tab({
+		selector:"#j-tab1"
+	})
+
+	var tab2=new Tab({
+		selector:"#j-tab2",
+		index:1
+	})
+	</script>
+</body>
+</html>
