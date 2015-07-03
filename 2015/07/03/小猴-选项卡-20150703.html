@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>原生选项卡</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	    <meta content="yes" name="apple-mobile-web-app-capable">
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+	    <meta content="telephone=no" name="format-detection">
+        <style type="text/css">
+			*{padding: 0;margin: 0;}
+			li{list-style:none;}
+			ul{clear:both;overflow:hidden;margin-bottom: 10px;}
+			.tab-list li{display: none;}
+			.tab-list li.cur{display: block;}
+			.tab-nav li{float: left;width: 80px;height: 20px;color:#666;background-color:#ccc;text-align: center;}
+			.tab-list {height:200px;text-align: center;}
+			.tab-nav li.cur{background-color:#fff;}
+			.tab{width: 320px;margin:10px auto;background-color:#ccc;}
+        </style>
+    </head>
+    <body>
+    	<div id="tab" class="tab">
+    		<ul class="tab-nav">
+	    		<li class="cur">选项卡1</li>
+	    		<li>选项卡2</li>
+	    		<li>选项卡3</li>
+	    	</ul>
+	    	<ul class="tab-list">
+	    		<li class="cur">选项卡1</li>
+	    		<li>选项卡2</li>
+	    		<li>选项卡3</li>
+	    	</ul>
+    	</div>
+    	<div id="tab1" class="tab">
+    		<ul class="tab-nav">
+	    		<li class="cur">选项卡1</li>
+	    		<li>选项卡2</li>
+	    		<li>选项卡3</li>
+	    	</ul>
+	    	<ul class="tab-list">
+	    		<li class="cur">选项卡1</li>
+	    		<li>选项卡2</li>
+	    		<li>选项卡3</li>
+	    	</ul>
+    	</div>
+    	<script type="text/javascript">
+    		var tab = function(id,oEven){
+    			this.oTab = document.getElementById(id);
+    			this.oNav = this.oTab.getElementsByTagName("ul")[0];
+    			this.aNavLi = this.oNav.getElementsByTagName("li")
+    			this.oList = this.oTab.getElementsByTagName("ul")[1];
+    			this.aListLi = this.oList.getElementsByTagName("li")
+    			this.setClick(oEven);
+    			
+    		} 
+    		tab.prototype.setClick = function(oEven)
+    		{
+    			for(var i=0;i<this.aNavLi.length;i++){
+    				this.aNavLi[i].index = i;
+    				this.aListLi[i].index = i;
+    				var _this = this;
+    				if (this.aNavLi[i].attachEvent) {
+						this.aNavLi[i].attachEvent("on"+oEven,function(){
+							_this.show(this);
+						});
+					}else{
+						this.aNavLi[i].addEventListener(oEven, function(){
+							_this.show(this);
+
+						}, false);
+					}
+    			}
+    		} 
+    		tab.prototype.show = function(_this)
+    		{
+    			for(var i=0;i<this.aNavLi.length;i++)
+    			{
+    				this.aNavLi[i].className = this.aListLi[i].className = '';
+    			}
+    			this.aNavLi[_this.index].className = this.aListLi[_this.index].className = 'cur';
+    		}
+    			
+    		new tab("tab","click");	
+    		new tab("tab1","click");	
+    	</script>
+    </body>
+</html>
