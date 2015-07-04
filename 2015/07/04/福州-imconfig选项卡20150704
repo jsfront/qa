@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="auther" content="lcn">
+	<style type="text/css">
+	.active{color:red;border: 1px solid #ff0099;}
+	</style>
+</head>
+<body>
+<div>
+	test1:
+	<choose>
+		<option class="active">1</option>
+		<option>2</option>
+		<option>3</option>
+	</choose>
+	test2:
+	<choose>
+		<option class="active">1</option>
+		<option>2</option>
+		<option>3</option>
+	</choose>
+
+	test33:
+	<selection>
+		<option class="active">1</option>
+		<option>2</option>
+		<option>3</option>
+	</selection>
+	test44:
+	<selection>
+		<option class="active">1</option>
+		<option>2</option>
+		<option>3</option>
+	</selection>
+	<div onclick="this.getElementsByTagName('span')[0].innerHTML = document.getElementsByTagName('choose')[0].val();">click here get test1 value:<span></span></div>
+	<div onclick="this.getElementsByTagName('span')[0].innerHTML = document.getElementsByTagName('choose')[1].val();">click here get test2 value:<span></span></div>
+	<div onclick="this.getElementsByTagName('span')[0].innerHTML = document.getElementsByTagName('selection')[0].val();">click here get test33 value:<span></span></div>
+	<div onclick="this.getElementsByTagName('span')[0].innerHTML = document.getElementsByTagName('selection')[1].val();">click here get test44 value:<span></span></div>
+</div>
+<script type="text/javascript">
+//面向过程
+(function(){
+	var addEventListener = typeof window.addEventListener != 'undefined';
+	var regExpFindClass = new RegExp('(\\s|^)active(\\s|$)');
+	var chooses = document.getElementsByTagName('choose');
+	for (var i = chooses.length - 1; i >= 0; i--) {
+
+		var options = chooses[i].getElementsByTagName('option');
+		for (var j = options.length - 1; j >= 0; j--) {
+
+			var option = options[j];
+			option.style.cursor = 'pointer';
+			option.style.display = 'inline-block';
+			//event listen
+			if(addEventListener){
+				option.addEventListener('touchstart', optionSelect);
+				option.addEventListener('click', optionSelect);
+			}else{
+				option.attachEvent('touchstart', optionSelect);
+				option.attachEvent('click', optionSelect);
+			}
+		}
+
+		chooses[i].val = getChooseVal;
+	}
+
+	function getChooseVal(){
+		var options = this.getElementsByTagName('option');
+		for (var i = options.length - 1; i >= 0; i--) {
+			if (regExpFindClass.test(options[i].className)){
+				return options[i].innerHTML;
+			}
+		};
+	}
+	function optionSelect(){
+
+		var options = this.parentNode.getElementsByTagName('option');
+		for (var i = options.length - 1; i >= 0; i--) {
+
+			if (regExpFindClass.test(options[i].className)){
+
+				var classNames = options[i].className.split(' ');
+				var classIndex = -1;
+				for (var j = classNames.length - 1; j >= 0; j--) {
+
+					if (classNames[j] == 'active'){
+						classIndex = j;
+					}
+				}
+
+				if (classIndex != -1){
+					classNames.splice(classIndex, 1);
+				}
+
+				options[i].className = classNames.join(' ');
+			}
+		}
+		var classNames = this.className.split(' ');
+		var classIndex = -1;
+		for (var j = classNames.length - 1; j >= 0; j--) {
+
+			if (classNames[j] == 'active'){
+				classIndex = j;
+			}
+		}
+
+		if(classIndex == -1){
+			classNames.push('active');
+		}
+
+		this.className = classNames.join(' ');
+	}
+})();
+//面向对象
+(function(){
+	var addEventListener = typeof window.addEventListener != 'undefined';
+	var regExpFindClass = new RegExp('(\\s|^)active(\\s|$)');
+	function selection(elm){
+		if(typeof elm === 'string'){
+			this.add(elm);
+		}else{
+			this.tagName = 'selection';
+			this.childNodes = 'option';
+			this.init();
+		}
+		return this.add;
+	};
+
+	selection.prototype = {
+		init:function(){
+			var chooses = document.getElementsByTagName(this.tagName);
+			for (var i = chooses.length - 1; i >= 0; i--) {
+				this.chooseRegister(chooses[i]);
+			};
+		},
+
+		add:function(elm){
+			this.chooseRegister(this.parseDom(elm));
+		},
+
+		chooseRegister:function(choose){
+			var options = choose.getElementsByTagName(this.childNodes);
+			for (var i = options.length - 1; i >= 0; i--) {
+				this.optionRegister(options[i]);
+			};
+			choose.val = this.chooseValue();
+		},
+		optionRegister:function(option){
+			option.style.cursor = 'pointer';
+			option.style.display = 'inline-block';
+			//event listen
+			if(addEventListener){
+				option.addEventListener('touchstart', optionSelect);
+				option.addEventListener('click', optionSelect);
+			}else{
+				option.attachEvent('touchstart', optionSelect);
+				option.attachEvent('click', optionSelect);
+			}
+		},
+		chooseValue:function(){
+			var that = this;
+			return function(){
+				var options = this.getElementsByTagName(that.childNodes);
+				for (var i = options.length - 1; i >= 0; i--) {
+					if (regExpFindClass.test(options[i].className)){
+						return options[i].innerHTML;
+					}
+				};
+			};
+		},
+		parseDom:function(arg) {
+			var objE = document.createElement('div');
+			objE.innerHTML = arg;
+			return objE.childNodes;
+		}
+	};
+
+	function optionSelect(){
+
+		var options = this.parentNode.getElementsByTagName('option');
+		for (var i = options.length - 1; i >= 0; i--) {
+
+			if (regExpFindClass.test(options[i].className)){
+
+				var classNames = options[i].className.split(' ');
+				var classIndex = -1;
+				for (var j = classNames.length - 1; j >= 0; j--) {
+
+					if (classNames[j] == 'active'){
+						classIndex = j;
+					}
+				}
+
+				if (classIndex != -1){
+					classNames.splice(classIndex, 1);
+				}
+
+				options[i].className = classNames.join(' ');
+			}
+		}
+		var classNames = this.className.split(' ');
+		var classIndex = -1;
+		for (var j = classNames.length - 1; j >= 0; j--) {
+
+			if (classNames[j] == 'active'){
+				classIndex = j;
+			}
+		}
+
+		if(classIndex == -1){
+			classNames.push('active');
+		}
+
+		this.className = classNames.join(' ');
+	}
+
+	var selection = new selection();
+})();
+</script>
+</body>
+</html>

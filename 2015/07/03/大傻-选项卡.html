@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡</title>
+	<style>
+	*{margin: 0;padding: 0;}
+	#tab{position: absolute;left:50%;top:50%;transform:translate(-50%,-50%);border: 1px solid #999;}
+	ul li{float:left; list-style: none;height: 50px;width: 100px;border-bottom: 1px solid #999;line-height: 50px;text-align: center;}
+	ul li~li{border-left: 1px solid #999;}
+	ul .active_li{background-color: red;color: #fff;}
+	#tab div{display: none;height: 200px;}
+	#tab .active{display: block;}
+	</style>
+	<script>
+	//普通方法
+	/*window.onload=function () {
+		var oTab=document.getElementById('tab');
+		var oLi=oTab.getElementsByTagName('li');
+		var oDiv=oTab.getElementsByTagName('div');
+
+		for (var i = 0; i < oLi.length; i++) {
+			oLi[i].index=i;
+			oLi[i].onmouseover=function () {
+				for (var i = 0; i < oLi.length; i++) {
+					oLi[i].className="";
+					oDiv[i].className="";
+				}
+				
+				this.className="active_li"
+				oDiv[this.index].className="active";
+			}
+		}
+	}*/
+
+	//不知道这样是不是面向对象，面向对象是不是就是封装一个方法给他呢
+	window.onload = function(){  
+	    var t1 = new Tab("tab");  
+	    t1.qiehuan();
+	}
+	function Tab(id){  
+	    oTab = document.getElementById(id);  
+	    oLi = oTab.getElementsByTagName("li");  
+	    oDiv = oTab.getElementsByTagName("div");    
+	}  
+  
+	Tab.prototype.qiehuan = function(){   
+	    for(var i=0; i<oLi.length;i++){  
+	        oLi[i].index = i;  
+	        oLi[i].onmouseover=function(){ 
+			    for(var i=0; i<oLi.length;i++){  
+			        oLi[i].className="";  
+			        oDiv[i].className="";  
+			    }  
+			    this.className="active_li";  
+			    oDiv[this.index].className="active"; 
+	        }  
+	    }     
+	}  
+	</script>
+</head>
+<body>
+	<div id="tab">
+		<ul>
+			<li class="active_li">陈奕迅</li>
+			<li>张国荣</li>
+			<li>张敬轩</li>
+			<li>王菲</li>
+		</ul>
+		<div class="active">我爱陈奕迅</div>
+		<div>我爱张国荣</div>
+		<div>我爱张敬轩</div>
+		<div>我爱王菲</div>
+	</div>
+</body>
+</html>
