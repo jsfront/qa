@@ -1,0 +1,66 @@
+@charset "UTF-8";
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width:900px;
+    margin: 0 auto;
+}
+
+
+
+/**tab
+**/
+.tabWapper {
+    background-color: #fff;
+    border-color: #9a9fa4;
+    border: 1px solid #ccc;
+    height: 450px;
+    position: relative;
+    width:700px;
+    margin-top: 50px;
+}
+.tabWapper .contents{
+    height: 100%;
+    position: relative;
+}
+.tabWapper .contents p{
+    padding: 10px;
+}
+
+.tabWapper .tabs {
+    height: 45px;
+}
+.tabWapper .tabs .tab {
+    background-color: #b9d8ff;
+    color: #095fb6;
+    cursor: pointer;
+    float: left;
+    font-size: 18px;
+    height: 25px;
+    line-height: 25px;
+    padding: 10px 0;
+    position: relative;
+    text-align: center;
+    width: 100px;
+}
+.tabWapper .tabs .tab.on {
+    background-color: #095fb6;
+    color: #fff;
+}
+.tabWapper .tabs .tab.on .arrow {
+    border-color: #095fb6 transparent transparent;
+    border-style: solid;
+    border-width: 6px;
+    bottom: -10px;
+    font-size: 0;
+    height: 0;
+    left: 45px;
+    line-height: 0;
+    position: absolute;
+    width: 0;
+    z-index: 8;
+}
+
+
