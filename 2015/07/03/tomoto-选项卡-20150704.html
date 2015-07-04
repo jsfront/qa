@@ -208,37 +208,96 @@
     <!-- container strat -->
     <div class="container">
 
-      <!-- tab控制栏 start -->
-      <ul class="nav-tabs">
-        <li class="active"><a href="#tab1" alt="tab1">tab1</a></li>
-        <li><a href="#tab2" alt="tab2">tab2</a></li>
-        <li><a href="#tab3" alt="tab3">tab3</a></li>
-      </ul>
-      <!-- tab控制栏 stop -->
+			<p>js控制1</p>
+			<!-- tabDiv1 start -->
+			<div id="tabDiv1">
 
-      <!-- tab-content start -->
-      <div class="tab-content">
+	      <!-- tab控制栏 start -->
+	      <ul class="nav-tabs">
+	        <li class="active"><a href="#tab1" alt="tab1">tab1</a></li>
+	        <li><a href="#tab2" alt="tab2">tab2</a></li>
+	        <li><a href="#tab3" alt="tab3">tab3</a></li>
+	      </ul>
+	      <!-- tab控制栏 stop -->
 
-        <!-- tab1 start -->
-        <div id="tab1" class="tab-pane active">
-          <p>tab1-content</p>
-        </div>
-        <!-- tab1 stop -->
+	      <!-- tab-content start -->
+	      <div class="tab-content">
 
-        <!-- tab2 start -->
-        <div id="tab2" class="tab-pane">
-          <p>tab2-content</p>
-        </div>
-        <!-- tab2 stop -->
+	        <!-- tab1 start -->
+	        <div id="tab1" class="tab-pane active">
+	          <p>tab1-content</p>
+	        </div>
+	        <!-- tab1 stop -->
 
-        <!-- tab3 start -->
-        <div id="tab3" class="tab-pane">
-          <p>tab3-content</p>
-        </div>
-        <!-- tab3 stop -->
+	        <!-- tab2 start -->
+	        <div id="tab2" class="tab-pane">
+	          <p>tab2-content</p>
+	        </div>
+	        <!-- tab2 stop -->
 
-      </div>
-      <!-- tab-content stop -->
+	        <!-- tab3 start -->
+	        <div id="tab3" class="tab-pane">
+	          <p>tab3-content</p>
+	        </div>
+	        <!-- tab3 stop -->
+
+	      </div>
+	      <!-- tab-content stop -->
+
+	    </div>
+	    <!-- tabDiv1 stop -->
+			
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+      <p>js控制2</p>
+
+      <!-- tabDiv2 strat -->
+      <div id="tabDiv2">
+
+	      <!-- tab控制栏 start -->
+	      <ul class="nav-tabs">
+	        <li class="active"><a href="#tab4" alt="tab4">tab4</a></li>
+	        <li><a href="#tab5" alt="tab5">tab5</a></li>
+	        <li><a href="#tab6" alt="tab6">tab6</a></li>
+	      </ul>
+	      <!-- tab控制栏 stop -->
+
+	      <!-- tab-content start -->
+	      <div class="tab-content">
+
+	        <!-- tab4 start -->
+	        <div id="tab4" class="tab-pane active">
+	          <p>tab4-content</p>
+	        </div>
+	        <!-- tab4 stop -->
+
+	        <!-- tab5 start -->
+	        <div id="tab5" class="tab-pane">
+	          <p>tab5-content</p>
+	        </div>
+	        <!-- tab5 stop -->
+
+	        <!-- tab6 start -->
+	        <div id="tab6" class="tab-pane">
+	          <p>tab6-content</p>
+	        </div>
+	        <!-- tab6 stop -->
+
+	      </div>
+	      <!-- tab-content stop -->
+
+	    </div>
+	    <!-- tabDiv2 stop -->
+
+	    <br>
+	    <br>
+	    <br>
+	    <br>
+	    <br>
+	    <p>纯css的tab</p>
 
       <!-- 一时兴起，想用用css3的:target 属性写个纯css的tab -->
       <ul class="css-tab">
@@ -273,11 +332,11 @@
 
     <script>
     	//tab切换，不懂面向对象是什么啊
-			function changeTab(){
-				var navTabs=document.getElementsByClassName("nav-tabs")[0];
+			function changeTab(obj){
+				var navTabs=obj.getElementsByClassName("nav-tabs")[0];
 				var tabLi=navTabs.getElementsByTagName("li");
 				var tabA=navTabs.getElementsByTagName("a");
-				var tabContent=document.getElementsByClassName("tab-content")[0];
+				var tabContent=obj.getElementsByClassName("tab-content")[0];
 				var tabPanel=tabContent.getElementsByClassName("tab-pane");
 				var tabALen=tabA.length;
 				for(var i=0;i<tabALen;i++){
@@ -298,7 +357,11 @@
 					}
 				}
 			}
-			changeTab();
+			var tabDiv1=document.getElementById("tabDiv1");
+			changeTab(tabDiv1);
+
+			var tabDiv2=document.getElementById("tabDiv2");
+			changeTab(tabDiv2);
 
 			//停止默认事件
 			function preventDefault(event) {
