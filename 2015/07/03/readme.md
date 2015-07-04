@@ -3,6 +3,10 @@
 - 用面向过程就是普通的方式写一个选项卡
 - 用面向对象的方式写一个选项卡
 - 添加touchstart,touchmove事件支持，就是支持移动端触摸切换。
+
+    - 可以参看这个[网址效果](http://www.superslide2.com/TouchSlide/demo/4.1txTab.html)，打开chrome的手机模拟器，
+    - [这是另外一个，他的控制器在下面的四个点上](http://touchslider.com/)。
+
 - 选项卡可以多处重复调用。
 
 ### 2. 规则：
