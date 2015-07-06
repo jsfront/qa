@@ -1,0 +1,142 @@
+@import "compass";
+// 变量开始
+$S: 480px;
+$M: 720px;
+$L: 1024px;
+
+@mixin MQ($canvas) {
+    @if $canvas == S {
+        @media only screen and (max-width: $S - 1) {
+            @content;
+        }
+    } @else if $canvas == M {
+        @media only screen and (min-width: $S) and (max-width: $M - 1){
+            @content;
+        }
+    } @else if $canvas == L {
+        @media only screen and (min-width: $M) and (max-width: $L - 1){
+            @content;
+        }
+    }
+}
+// 变量结束
+
+// 公共样式 start
+html, body {
+    color: #5b5b5b;
+    font: 14px/1.8 "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+}
+
+p{
+    margin: 0.5em 1em;
+}
+
+html, body, ul, ol{
+    margin: 0px;
+    padding: 0px;
+}
+
+a{
+    text-decoration: none;
+}
+
+ul{
+    list-style: none;
+}
+
+.content-list {
+    margin: 10px;
+}
+
+// 公共样式 end
+
+.tab-wrapper {
+    width: 420px;
+    height: auto;
+    margin: 40px auto;
+    @include MQ(S) {
+        position: relative;
+        margin: 1em 0;
+        width: auto;
+    }
+    @include MQ(M) {
+        position: relative;
+        margin: 1em 0;
+        width:auto;
+    }
+    /*@include MQ(L) {
+        margin: 1em;
+        width: auto;
+    }*/
+
+    &>ul {
+        @include clearfix;
+        background: #f2f2f2;
+        padding: 6px 10px 0;
+        li {
+            cursor: pointer;
+            background: #f2f2f2;
+            float: left;
+            padding: 0px 10px;
+            @include border-radius(3px 3px 0 0);
+            @include transition(all 0.2s ease);
+            &:hover{
+                background: darken(#f2f2f2, 3%);
+            }
+            &.on, &.hover{
+                background: #ffffff;
+                color: #f60;
+            }
+        }
+    }
+
+    .mobile-wrapper{
+        border: 1px #f2f2f2 solid;
+        border-top: 0;
+        @include MQ(S) {
+            position: relative;
+            width: auto;
+            height: 220px;
+            overflow: hidden;
+        }
+        @include MQ(M) {
+            width: auto;
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+    }
+
+    .tab-wrapper__content{
+        overflow: hidden;
+        @include MQ(S) {
+            position: absolute;
+            @include clearfix;
+            width: 300%;
+            // @include transition(all 0.2s ease);
+        }
+        @include MQ(M) {
+            @include clearfix;
+            position: absolute;
+            width: 300%;
+        }
+        &>div{
+            background: #ffffff;
+            @include MQ(S) {
+                float: left;
+                display: block;
+            }
+            @include MQ(M) {
+                display: block;
+                float: left;
+            }
+            display: none;
+            &.active, &.current{
+                display: block;
+            }
+        }
+    }
+}
+
+
+
