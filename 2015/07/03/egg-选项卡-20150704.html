@@ -62,74 +62,75 @@
 	</div>
 
 <script>
+/*
+	(function () {
+		var tab = {
+			btnGroup: document.querySelector(".control"),
+			show: document.querySelector(".show"),
+			active: document.querySelector(".control .active"),
+			touStart: {
+				posX: 0,
+				posY: 0,
+				movX: 0,
+				movY: 0
+			},
+			colorTransform: function (e) {
+				var target = e.target;
+				if (target.tagName.toLowerCase() != "button") {
+					return false;
+				}
+				tab.show.className = "show " + target.dataset.color;
+				tab.active.classList.remove("active");
+				target.classList.add("active");
+				tab.active = target;
+			},
+			nextColor: function (bool) {
+				if (bool) {
+					var next = tab.active.nextElementSibling || tab.btnGroup.firstElementChild;
+				} else {
+					var next = tab.active.previousElementSibling || tab.btnGroup.lastElementChild;
+				}
+				tab.show.className = "show " + next.dataset.color;
+				tab.active.classList.remove("active");
+				next.classList.add("active");
+				tab.active = next;
+			},
+			startHandler: function (e) {
+				if(event.targetTouches.length > 1) {
+					return false;
+				}
+				var touch = e.targetTouches[0];
+				tab.touStart.posX = touch.pageX;
+				tab.touStart.posY = touch.pageY;
+				this.addEventListener('touchmove', tab.moveHandler, false);
+				this.addEventListener('touchend', tab.endHandler, false);
+			},
+			moveHandler: function(e){
+				var touch = e.targetTouches[0];
+				tab.touStart.movX = touch.pageX - tab.touStart.posX;
+				tab.touStart.movY = touch.pageY - tab.touStart.posY;
+			},
+			endHandler: function(e){
+				if(Math.abs(tab.touStart.movX) < 30){
+					return false;
+				}
 
-	// (function () {
-	// 	var tab = {
-	// 		btnGroup: document.querySelector(".control"),
-	// 		show: document.querySelector(".show"),
-	// 		active: document.querySelector(".control .active"),
-	// 		touStart: {
-	// 			posX: 0,
-	// 			posY: 0,
-	// 			movX: 0,
-	// 			movY: 0
-	// 		},
-	// 		colorTransform: function (e) {
-	// 			var target = e.target;
-	// 			if (target.tagName.toLowerCase() != "button") {
-	// 				return false;
-	// 			}
-	// 			tab.show.className = "show " + target.dataset.color;
-	// 			tab.active.classList.remove("active");
-	// 			target.classList.add("active");
-	// 			tab.active = target;
-	// 		},
-	// 		nextColor: function (bool) {
-	// 			if (bool) {
-	// 				var next = tab.active.nextElementSibling || tab.btnGroup.firstElementChild;
-	// 			} else {
-	// 				var next = tab.active.previousElementSibling || tab.btnGroup.lastElementChild;
-	// 			}
-	// 			tab.show.className = "show " + next.dataset.color;
-	// 			tab.active.classList.remove("active");
-	// 			next.classList.add("active");
-	// 			tab.active = next;
-	// 		},
-	// 		startHandler: function (e) {
-	// 			if(event.targetTouches.length > 1) {
-	// 				return false;
-	// 			}
-	// 			var touch = e.targetTouches[0];
-	// 			tab.touStart.posX = touch.pageX;
-	// 			tab.touStart.posY = touch.pageY;
-	// 			this.addEventListener('touchmove', tab.moveHandler, false);
-	// 			this.addEventListener('touchend', tab.endHandler, false);
-	// 		},
-	// 		moveHandler: function(e){
-	// 			var touch = e.targetTouches[0];
-	// 			tab.touStart.movX = touch.pageX - tab.touStart.posX;
-	// 			tab.touStart.movY = touch.pageY - tab.touStart.posY;
-	// 		},
-	// 		endHandler: function(e){
-	// 			if(Math.abs(tab.touStart.movX) < 30){ 
-	// 				return false;
-	// 			}
-
-	// 			if(tab.touStart.movX >= 30){
-	// 				tab.nextColor(true);
-	// 			} else {
-	// 				tab.nextColor(false);
-	// 			}
-	// 			this.removeEventListener('touchmove', tab.moveHandler, false);
-	// 			this.removeEventListener('touchend', tab.endHandler, false);
-	// 		},
-	// 		init: function () {
-	// 			tab.show.addEventListener("touchstart", tab.startHandler, false);
-	// 			tab.btnGroup.addEventListener("click", tab.colorTransform, false);
-	// 		}
-	// 	};
-	// 	tab.init();	
-	// }());
+				if(tab.touStart.movX >= 30){
+					tab.nextColor(true);
+				} else {
+					tab.nextColor(false);
+				}
+				this.removeEventListener('touchmove', tab.moveHandler, false);
+				this.removeEventListener('touchend', tab.endHandler, false);
+			},
+			init: function () {
+				tab.show.addEventListener("touchstart", tab.startHandler, false);
+				tab.btnGroup.addEventListener("click", tab.colorTransform, false);
+			}
+		};
+		tab.init();
+	}());
+*/
 
 
 	(function () {
@@ -182,7 +183,7 @@
 				this.touStart.movY = touch.pageY - this.touStart.posY;
 			},
 			endHandler: function(e){
-				if(Math.abs(this.touStart.movX) < 30){ 
+				if(Math.abs(this.touStart.movX) < 30){
 					return false;
 				}
 				var target = e.target;
@@ -191,6 +192,12 @@
 				} else {
 					this.nextColor(false);
 				}
+				this.touStart = {
+					posX: 0,
+					posY: 0,
+					movX: 0,
+					movY: 0
+				};
 			},
 			init: function () {
 				this.show.addEventListener("touchstart", this.startHandler.bind(this), false);
