@@ -58,8 +58,8 @@
 				option.addEventListener('touchstart', optionSelect);
 				option.addEventListener('click', optionSelect);
 			}else{
-				option.attachEvent('touchstart', optionSelect);
-				option.attachEvent('click', optionSelect);
+				option.attachEvent('ontouchstart', optionSelect);
+				option.attachEvent('onclick', optionSelect);
 			}
 		}
 
@@ -155,8 +155,8 @@
 				option.addEventListener('touchstart', optionSelect);
 				option.addEventListener('click', optionSelect);
 			}else{
-				option.attachEvent('touchstart', optionSelect);
-				option.attachEvent('click', optionSelect);
+				option.attachEvent('ontouchstart', optionSelect);
+				option.attachEvent('onclick', optionSelect);
 			}
 		},
 		chooseValue:function(){
