@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>tomoto-选项卡－20150704</title>
+    <meta name="description" content="tomoto-选项卡－20150704">
+    <meta name="keywords" content="tomoto,选项卡,20150704">
+    <style>
+
+    	/*reset*/
+			*{
+			  -moz-box-sizing: border-box;
+			  -webkit-box-sizing: border-box;
+			  -o-box-sizing: border-box;
+			  -ms-box-sizing: border-box;
+			  box-sizing: border-box;
+			}
+
+			/*common*/
+			.container{
+				width: 1200px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			/*nav-tabs*/
+			.nav-tabs {
+			  border-bottom: 1px solid #ddd;
+			  padding-left: 0;
+			  margin-bottom: 0;
+			  list-style: none;
+			  margin-top: 20px;
+			}
+			.nav-tabs>li {
+			  margin-bottom: -1px;
+			  position: relative;
+			  display: inline-block;
+			}
+			.nav-tabs>li>a {
+			  line-height: 1.42857143;
+			  border: 1px solid transparent;
+			  border-radius: 4px 4px 0 0;
+			  position: relative;
+			  display: block;
+			  padding: 10px 15px;
+			  text-decoration: none;
+			  color: #3798e7;
+			  -webkit-transition: all 0.3s ease;
+			     -moz-transition: all 0.3s ease;
+			       -o-transition: all 0.3s ease;
+			          transition: all 0.3s ease;
+			}
+			.nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
+			  background-color: #eee;
+			  border-color: #eee #eee #ddd;
+			  -webkit-transition: all 0.3s ease;
+			     -moz-transition: all 0.3s ease;
+			       -o-transition: all 0.3s ease;
+			          transition: all 0.3s ease;
+			}
+			.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+			  color: #333;
+			  cursor: default;
+			  background-color: #fff;
+			  border: 1px solid #ddd;
+			  border-bottom-color: transparent;
+			  -webkit-transition: all 0.3s ease;
+			     -moz-transition: all 0.3s ease;
+			       -o-transition: all 0.3s ease;
+			          transition: all 0.3s ease;
+			}
+
+			/*tab-pane*/
+			.tab-pane{
+			  display: none;
+			  -webkit-animation: opacity021 1.2s ease;
+			     -moz-animation: opacity021 1.2s ease;
+			       -o-animation: opacity021 1.2s ease;
+			          animation: opacity021 1.2s ease;
+			}
+
+			/*opacity从0到1*/
+			@keyframes opacity021 {
+				0%   {
+					filter:alpha(opacity=0);
+					-moz-opacity: 0;
+					opacity: 0;
+				}
+				100% {
+					filter:alpha(opacity100);
+					-moz-opacity: 1;
+					opacity: 1;
+				}
+			}
+			@-moz-keyframes opacity021 {
+				0%   {
+					filter:alpha(opacity=0);
+					-moz-opacity: 0;
+					opacity: 0;
+				}
+				100% {
+					filter:alpha(opacity100);
+					-moz-opacity: 1;
+					opacity: 1;
+				}
+			}
+
+			@-webkit-keyframes opacity021 {
+				0%   {
+					filter:alpha(opacity=0);
+					-moz-opacity: 0;
+					opacity: 0;
+				}
+				100% {
+					filter:alpha(opacity100);
+					-moz-opacity: 1;
+					opacity: 1;
+				}
+			}
+
+			@-o-keyframes opacity021 {
+				0%   {
+					filter:alpha(opacity=0);
+					-moz-opacity: 0;
+					opacity: 0;
+				}
+				100% {
+					filter:alpha(opacity100);
+					-moz-opacity: 1;
+					opacity: 1;
+				}
+			}
+			.tab-content .active{
+			  display: block;
+			}
+
+			/*纯css的tab*/
+			.css-tab{
+				list-style: none;
+				padding-left: 0;
+				position: relative;
+				border-bottom: 1px solid #d5d5d5;
+				margin-top: 20px;
+			}
+			.item{
+				display: inline-block;
+			}
+			.css-tab .tab-indicators{
+			  line-height: 1.42857143;
+			  border: 1px solid transparent;
+			  border-radius: 4px 4px 0 0;
+			  position: relative;
+				display: inline-block;
+				z-index: 2;
+				margin-bottom: -1px;
+				text-decoration: none;
+			  padding: 10px 15px;
+			  color: #3798e7;
+			  -webkit-transition: all 0.3s ease;
+			     -moz-transition: all 0.3s ease;
+			       -o-transition: all 0.3s ease;
+			          transition: all 0.3s ease;
+
+			}
+			
+			.css-tab-content{
+				position: absolute;
+				z-index: 1;
+				left: 0;
+				top: 66px;
+				display: none;
+			}
+			.css-tab .tab-indicators:hover {
+			  background-color: #eee;
+			  border-color: #eee #eee #ddd;
+			  -webkit-transition: all 0.3s ease;
+			     -moz-transition: all 0.3s ease;
+			       -o-transition: all 0.3s ease;
+			          transition: all 0.3s ease;
+			}
+			.css-tab .item:target > .tab-indicators{
+				color: #333;
+			  cursor: default;
+			  background-color: #fff;
+			  border: 1px solid #ddd;
+			  border-bottom-color: transparent;
+			  -webkit-transition: all 0.3s ease;
+			     -moz-transition: all 0.3s ease;
+			       -o-transition: all 0.3s ease;
+			          transition: all 0.3s ease;
+			}
+			.css-tab .item:target > .css-tab-content{
+				display: block;
+				z-index: 3;
+				-webkit-animation: opacity021 1.2s ease;
+			     -moz-animation: opacity021 1.2s ease;
+			       -o-animation: opacity021 1.2s ease;
+			          animation: opacity021 1.2s ease;
+			}
+			
+
+    </style>
+  </head>
+
+  <body>
+
+    <!-- container strat -->
+    <div class="container">
+
+			<p>js控制1</p>
+			<!-- tabDiv1 start -->
+			<div id="tabDiv1">
+
+	      <!-- tab控制栏 start -->
+	      <ul class="nav-tabs">
+	        <li class="active"><a href="#tab1" alt="tab1">tab1</a></li>
+	        <li><a href="#tab2" alt="tab2">tab2</a></li>
+	        <li><a href="#tab3" alt="tab3">tab3</a></li>
+	      </ul>
+	      <!-- tab控制栏 stop -->
+
+	      <!-- tab-content start -->
+	      <div class="tab-content">
+
+	        <!-- tab1 start -->
+	        <div id="tab1" class="tab-pane active">
+	          <p>tab1-content</p>
+	        </div>
+	        <!-- tab1 stop -->
+
+	        <!-- tab2 start -->
+	        <div id="tab2" class="tab-pane">
+	          <p>tab2-content</p>
+	        </div>
+	        <!-- tab2 stop -->
+
+	        <!-- tab3 start -->
+	        <div id="tab3" class="tab-pane">
+	          <p>tab3-content</p>
+	        </div>
+	        <!-- tab3 stop -->
+
+	      </div>
+	      <!-- tab-content stop -->
+
+	    </div>
+	    <!-- tabDiv1 stop -->
+			
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+      <p>js控制2</p>
+
+      <!-- tabDiv2 strat -->
+      <div id="tabDiv2">
+
+	      <!-- tab控制栏 start -->
+	      <ul class="nav-tabs">
+	        <li class="active"><a href="#tab4" alt="tab4">tab4</a></li>
+	        <li><a href="#tab5" alt="tab5">tab5</a></li>
+	        <li><a href="#tab6" alt="tab6">tab6</a></li>
+	      </ul>
+	      <!-- tab控制栏 stop -->
+
+	      <!-- tab-content start -->
+	      <div class="tab-content">
+
+	        <!-- tab4 start -->
+	        <div id="tab4" class="tab-pane active">
+	          <p>tab4-content</p>
+	        </div>
+	        <!-- tab4 stop -->
+
+	        <!-- tab5 start -->
+	        <div id="tab5" class="tab-pane">
+	          <p>tab5-content</p>
+	        </div>
+	        <!-- tab5 stop -->
+
+	        <!-- tab6 start -->
+	        <div id="tab6" class="tab-pane">
+	          <p>tab6-content</p>
+	        </div>
+	        <!-- tab6 stop -->
+
+	      </div>
+	      <!-- tab-content stop -->
+
+	    </div>
+	    <!-- tabDiv2 stop -->
+
+	    <br>
+	    <br>
+	    <br>
+	    <br>
+	    <br>
+	    <p>纯css的tab</p>
+
+      <!-- 一时兴起，想用用css3的:target 属性写个纯css的tab -->
+      <ul class="css-tab">
+      	<li class="item" id="cssTab1">
+      		<a class="tab-indicators" href="#cssTab1" alt="tab1">tab1</a>
+      		<div class="css-tab-content">
+      			<p>tab1-content</p>
+      		</div>
+      	</li>
+      	<li class="item" id="cssTab2">
+      		<a class="tab-indicators" href="#cssTab2" alt="tab2">tab2</a>
+      		<div class="css-tab-content">
+      			<p>tab2-content</p>
+      		</div>
+      	</li>
+      	<li class="item" id="cssTab3">
+      		<a class="tab-indicators" href="#cssTab3" alt="tab3">tab3</a>
+      		<div class="css-tab-content">
+      			<p>tab3-content</p>
+      		</div>
+      	</li>
+      	<li class="item" id="cssTab4">
+      		<a class="tab-indicators" href="#cssTab4" alt="tab4">tab4</a>
+      		<div class="css-tab-content">
+      			<p>tab4-content</p>
+      		</div>
+      	</li>
+      </ul>
+
+    </div>
+    <!-- container stop -->
+
+    <script>
+    	//tab切换，不懂面向对象是什么啊
+			function changeTab(obj){
+				var navTabs=obj.getElementsByClassName("nav-tabs")[0];
+				var tabLi=navTabs.getElementsByTagName("li");
+				var tabA=navTabs.getElementsByTagName("a");
+				var tabContent=obj.getElementsByClassName("tab-content")[0];
+				var tabPanel=tabContent.getElementsByClassName("tab-pane");
+				var tabALen=tabA.length;
+				for(var i=0;i<tabALen;i++){
+					tabA[i].onclick=function(e){
+						preventDefault(e);
+						// 清空默认active
+						for(var j=0;j<tabALen;j++){
+							tabLi[j].className="";
+							tabPanel[j].className="tab-pane";
+						}
+						this.parentNode.className="active";
+						// 改变内容区块
+						var tmp=this.getAttribute("href");
+						if(tmp.charAt(0)=="#"){
+							var tmpId=tmp.replace("#","");
+							document.getElementById(tmpId).className="tab-pane active";
+						}
+					}
+				}
+			}
+			var tabDiv1=document.getElementById("tabDiv1");
+			changeTab(tabDiv1);
+
+			var tabDiv2=document.getElementById("tabDiv2");
+			changeTab(tabDiv2);
+
+			//停止默认事件
+			function preventDefault(event) {
+		    var e = event || window.event;
+		    if (e.preventDefault){
+		    	e.preventDefault();
+		    }else{
+		    	e.returnValue = false;
+		    }
+			}
+    </script>
+
+  </body>
+</html>
