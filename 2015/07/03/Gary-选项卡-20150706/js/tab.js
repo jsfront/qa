@@ -91,8 +91,8 @@ var Tab = (function () {
             },
 
             handlerEnd: function (event) {
-                var target = event.target,
-                    idx = target.index,
+                var indexOf = Array.prototype.indexOf,
+                    idx = indexOf.call(tabDiv, this),
                     touches = event.changedTouches;
 
                 mobileObj.lastX = touches[0].pageX;
