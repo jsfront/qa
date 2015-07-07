@@ -4,12 +4,13 @@
  * 支持移动端
  * 支持多处使用
  * 注：代码没有使用jQuery。
+ * update:  增加滚动方式判断
  */
 
 log = console.log.bind(console);
 
 function Tab(tabName, tabContentName, onName, activeName) {
-    'use strice';
+    'use strict';
     //this.wrapper = wrapperName;
     this.tabName = tabName;
     this.contentName = tabContentName;
@@ -49,16 +50,10 @@ Tab.prototype.init = function () {
     var animateObj = {
         animateCss: 'all 0.2s ease-in-out',
         animateInit: function () {
-            moveWrapper.style.webkitTransition = '';
-            moveWrapper.style.MozTransition = '';
-            moveWrapper.style.msTransition = '';
-            moveWrapper.style.transition = '';
+            moveWrapper.style.webkitTransition = moveWrapper.style.MozTransition = moveWrapper.style.msTransition = moveWrapper.style.transition = '';
         },
         setAnimate: function () {
-            moveWrapper.style.webkitTransition = animateObj.animateCss;
-            moveWrapper.style.MozTransition = animateObj.animateCss;
-            moveWrapper.style.msTransition = animateObj.animateCss;
-            moveWrapper.style.transition = animateObj.animateCss;
+            moveWrapper.style.webkitTransition = moveWrapper.style.MozTransition = moveWrapper.style.msTransition = moveWrapper.style.transition = animateObj.animateCss;
         }
     };
 
@@ -77,18 +72,21 @@ Tab.prototype.init = function () {
 
         firstX: 0,
         lastX: 0,
+        firstY: 0,
+        lastY: 0,
         xIng: 0,
-        distance: 0,
+        distanceX: 0,
+        yIng: 0,
         currentLeft: 0,
         currentIndex: 0,
+        direction: 'peace',
 
         handlerSart: function (event) {
-            event.preventDefault();
-            //log('开始');
             var touches = event.changedTouches;
 
             animateObj.animateInit();
             mobileObj.firstX = touches[0].pageX;
+            mobileObj.firstY = touches[0].pageY;
         },
 
         handlerEnd: function (event) {
@@ -99,9 +97,11 @@ Tab.prototype.init = function () {
             var touches = event.changedTouches;
 
             mobileObj.lastX = touches[0].pageX;
-            mobileObj.distance = mobileObj.lastX - mobileObj.firstX;
+            mobileObj.lastY = touches[0].pageY;
 
-            if (mobileObj.distance > 0 && Math.abs(mobileObj.distance) > 30) {
+            mobileObj.distanceX = mobileObj.lastX - mobileObj.firstX;
+
+            if (mobileObj.distanceX > 0 && Math.abs(mobileObj.distanceX) > 30) {
 
                 if (idx === 0) {
                     this.parentNode.style.left = 0;
@@ -109,7 +109,7 @@ Tab.prototype.init = function () {
                     this.parentNode.style.left = parseInt(mobileObj.currentLeft) + tabDivWidth + 'px';
                 }
 
-            } else if (mobileObj.distance < 0 && Math.abs(mobileObj.distance) > 30) {
+            } else if (mobileObj.distanceX < 0 && Math.abs(mobileObj.distanceX) > 30) {
 
                 if (idx === (divLen - 1)) {
                     this.parentNode.style.left = '-' + tabDivWidth * idx + 'px';
@@ -133,28 +133,37 @@ Tab.prototype.init = function () {
             log(divLen);
             log('end测试数据结束');*/
 
-            mobileObj.currentIndex = (Math.abs(parseInt(mobileObj.currentLeft)) / parseInt(tabDiv[0].parentNode.style.width) ) * divLen;
+            mobileObj.currentIndex = (Math.abs(parseInt(mobileObj.currentLeft)) / parseInt(moveWrapper.style.width) ) * divLen;
+            mobileObj.direction = 'peace';
+            mobileObj.xIng = mobileObj.yIng = 0;
 
             animateObj.setAnimate();
-            log(mobileObj.currentIndex);
+            log(mobileObj.xIng);
             triggerSwitch(null, mobileObj.currentIndex);
         },
 
-        /*handleCancel: function (event) {
-            event.preventDefault();
-            log('取消了');
-            var touches = event.changedTouches;
-        },*/
-
         handleMove: function (event) {
-            event.preventDefault();
-            var touches = event.changedTouches;
-            mobileObj.xIng = touches[0].pageX - mobileObj.firstX;
+            if (mobileObj.direction === 'y') return;
+            event.stopPropagation();
 
+            var touches = event.changedTouches;
+            if(touches.length > 1 || event.scale && event.scale !== 1) return;
+            mobileObj.xIng = touches[0].pageX - mobileObj.firstX;
+            mobileObj.yIng = touches[0].pageY - mobileObj.firstY;
+
+            log('x轴：' + mobileObj.xIng + '；y轴：' + mobileObj.yIng);
+            log(mobileObj.direction);
+
+            if(Math.abs(mobileObj.yIng) < Math.abs(mobileObj.xIng)) {
+                mobileObj.direction = 'x';
+                event.preventDefault();
+            } else {
+                mobileObj.direction = 'y';
+            }
+            log(event.defaultPrevented);
+            this.parentNode.style.left = parseInt(mobileObj.currentLeft) + mobileObj.xIng + 'px';
            /* log(mobileObj.xIng);
             log(this.parentNode.style.left);*/
-
-            this.parentNode.style.left = parseInt(mobileObj.currentLeft) + mobileObj.xIng + 'px';
 
             /*log(this.parentNode.style.left);*/
         }
@@ -164,12 +173,12 @@ Tab.prototype.init = function () {
         var indexOf = Array.prototype.indexOf,
             idx = indexOf.call(tabItem, this);
 
-        log(idx, tabDiv[0].parentNode.style.left, mobileObj.currentIndex);
+        log(idx, moveWrapper.style.left, mobileObj.currentIndex);
 
-        tabDiv[0].parentNode.style.left = parseInt(tabDiv[0].parentNode.style.left) + tabDivWidth * (mobileObj.currentIndex - idx) + 'px';
+        tabDiv[0].parentNode.style.left = parseInt(moveWrapper.style.left) + tabDivWidth * (mobileObj.currentIndex - idx) + 'px';
         mobileObj.currentIndex = idx;
-        mobileObj.currentLeft = tabDiv[0].parentNode.style.left;
-        mobileObj.distance = 0;
+        mobileObj.currentLeft = moveWrapper.style.left;
+        mobileObj.distanceX = 0;
         log(mobileObj.currentLeft);
 
         // mobile切换class
@@ -205,7 +214,7 @@ Tab.prototype.init = function () {
         // 移动端事件绑定
         addHandler(tabDiv[i], 'touchstart', mobileObj.handlerSart);
         addHandler(tabDiv[i], 'touchend', mobileObj.handlerEnd);
-        //addHandler(tabDiv[i], 'touchcancel', mobileObj.handleCancel);
+        addHandler(tabDiv[i], 'touchcancel', mobileObj.handlerEnd);
         addHandler(tabDiv[i], 'touchleave', mobileObj.handlerEnd);
         addHandler(tabDiv[i], 'touchmove', mobileObj.handleMove);
     }
