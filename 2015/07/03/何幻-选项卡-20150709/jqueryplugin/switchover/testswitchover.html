@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test switch over</title>
+	
+	<script src="../../library/jquerycore/jquerycore.js"></script>
+	
+	<script src="../../library/jqueryextension/find.js"></script>
+	<script src="../../library/jqueryextension/each.js"></script>
+	<script src="../../library/jqueryextension/data.js"></script>
+	<script src="../../library/jqueryextension/on.js"></script>
+	<script src="../../library/jqueryextension/delegate.js"></script>
+	<script src="../../library/jqueryextension/attr.js"></script>
+	<script src="../../library/jqueryextension/css.js"></script>
+	<script src="../../library/jqueryextension/addClass.js"></script>
+	<script src="../../library/jqueryextension/eq.js"></script>
+	<script src="../../library/jqueryextension/index.js"></script>
+	
+	<script src="../../library/condition/condition.js"></script>
+	<script src="../../library/simplepluginmanager/simplepluginmanager.js"></script>
+	
+	<script src="../../library/inturn/inturn.js"></script>
+	
+    <script src="switchover.js" type="text/javascript"></script>	
+	
+	<style>
+		body{
+			margin:0;
+			padding:0;
+		}
+		
+		#switchOver{
+			width:700px;
+			height:500px;
+			margin:0 auto;
+			overflow:hidden;
+			margin-top:50px;
+		}
+		#switchOver>div{
+			height:500px;
+			background: sienna;
+			font-size:50px;
+			color:white;
+			position:relative;
+			display:none;
+			text-align:center;
+			line-height:500px;
+			font-size:100px;
+		}
+		
+		#response{
+			display:table;
+			width:100%;
+			margin-top:50px;
+		}
+		#response>div{
+			display:table-cell;
+			text-align:center;
+		}
+		
+		#response>div>span{
+			font-size:50px;
+			background:gray;
+			width:40px;
+			height:40px;
+			border-radius:20px;
+			display:inline-block;
+			margin:0 10px;
+		}
+		.active{
+			background:sienna !important;
+		}
+		
+		.show{
+			display:block !important;
+		}
+		
+	</style>
+</head>
+<body>
+	
+	<div id="response">
+		<div>
+			<span class="active"></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	
+	<div id="switchOver">
+		<div class="show">1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<div>5</div>
+	</div>
+	
+	<script>
+		(function($){
+			
+			var spanCount=$('#response>div>span').length,
+				inturn=new window.Inturn(spanCount);
+			
+			$('#switchOver').switchOver('init',{
+				selector:'>div',
+				progress:function(deltaX,deltaY){
+					var $element=$(this);
+					
+					$element.css({
+						left:deltaX
+					});
+				},
+				success:function(deltaX,deltaY){
+					var $element=$(this);					
+					$element.css({
+						left:0
+					});
+					
+					if(deltaX===0){
+						return;
+					}
+					
+					var index=$('#response>div>span.active').index();
+						
+					inturn.setIndex(index);
+					
+					var nextIndex=deltaX>0
+						?inturn.prev().getIndex()
+						:inturn.next().getIndex();
+						
+					$('#switchOver>div')
+						.removeClass('show')
+						.eq(nextIndex)
+						.addClass('show');
+					
+					$('#response>div>span')
+						.removeClass('active')
+						.eq(nextIndex)
+						.addClass('active');
+				}
+			});
+			
+		}(jQuery));
+	</script>
+</body>
+</html>

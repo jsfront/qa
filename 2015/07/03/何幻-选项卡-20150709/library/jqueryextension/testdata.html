@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test data</title>
+	
+	<script src="../jquerycore/jquerycore.js"></script>
+	
+	<script src="each.js"></script>
+	<script src="data.js"></script>
+</head>
+<body>
+	
+	<div id="div1"></div>
+	<div id="div2"></div>
+	<div id="div3"></div>
+	
+	<script>
+		(function($){
+			
+			$('#div1,#div2,#div3').data('testKey','testValue');			
+			alert($('#div1,#div3').data('testKey'));
+			
+			$('#div1,#div2,#div3').removeData('testKey');
+			alert($('#div2').data('testKey'));
+			
+		}(jQuery));
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test addClass</title>
+	
+	<script src="../jquerycore/jquerycore.js"></script>
+	
+	<script src="each.js"></script>
+	<script src="addClass.js"></script>
+</head>
+<body>
+	
+	<style>
+		.test{
+			background: sienna;
+			color:white;
+		}
+	</style>
+	
+	<input id="text1" type="text" value="1" />
+	
+	<script>
+		(function($){
+			
+			$('#text1').addClass('test');
+			setTimeout(function(){
+				$('#text1').removeClass('test');
+			},2000);
+			
+		}(jQuery));
+	</script>
+	
+</body>
+</html>

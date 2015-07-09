@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test delegate</title>
+	
+	<script src="../jquerycore/jquerycore.js"></script>
+	
+	<script src="find.js"></script>
+	<script src="each.js"></script>
+	<script src="on.js"></script>
+	<script src="data.js"></script>
+	<script src="delegate.js"></script>
+</head>
+<body>
+	<div id="div1">
+		<input type="button" value="1" />
+		<input type="button" value="2" />
+		<div>
+			<input type="button" value="3" />
+		</div>
+	</div>
+	<input id="undelegate" type="button" value="undelegate" />
+	
+	<script>
+		(function($){
+			
+			$('#div1').delegate('>input','click',function(e){
+				var htmlButton=this;
+				
+				alert(htmlButton.value);
+			});
+			
+			$('#undelegate').on('click',function(){
+				$('#div1').undelegate('click');
+			});
+			
+		}(jQuery));
+	</script>
+</body>
+</html>

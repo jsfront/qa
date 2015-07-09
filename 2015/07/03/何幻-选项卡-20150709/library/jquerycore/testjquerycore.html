@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test jquery core</title>
+	
+	<script src="jquerycore.js"></script>
+</head>
+<body>
+	
+	<input class="test" type="text" />
+	<div class="test">
+	<span class="test">
+	
+	<script>
+		
+		(function($){
+			
+			//1. collection
+			var $test=$('.test');
+			alert(typeof $test);
+			
+			[].forEach.call($test,function(item){
+				alert(item);
+			});
+			
+			//2. static extend
+			$.extend({
+				test:1
+			});
+			
+			alert($.test);
+			
+			//3. instance extend
+			$.prototype.extend({
+				test:2
+			});
+			
+			alert($test.test);
+			
+		}(jQuery));
+	</script>
+	
+</body>
+</html>
