@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test on</title>
+	
+	<script src="../jquerycore/jquerycore.js"></script>
+	
+	<script src="each.js"></script>
+	<script src="data.js"></script>
+	<script src="on.js"></script>
+</head>
+<body>
+	
+	<input id="button1" type="button" value="1" />
+	<input id="button2" type="button" value="2" />
+	
+	<input id="off" type="button" value="off" />
+	
+	<script>
+		(function($){
+			
+			$('#button1,#button2').on('click',function(){
+				var htmlButton=this;
+				
+				alert(htmlButton.value);
+			});
+			
+			$('#off').on('click',function(){
+				$('#button1,#button2').off('click');
+			});
+			
+		}(jQuery));
+	</script>
+</body>
+</html>

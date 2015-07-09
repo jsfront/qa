@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test find</title>
+	
+	<script src="../jquerycore/jquerycore.js"></script>
+	
+	<script src="find.js"></script>
+</head>
+<body>
+	
+	<div id="div1">
+		<div class="testDiv">
+			<div>
+				<span class="testSpan">1</span>
+			</div>
+		</div>
+		<div class="testDiv">
+			<input type="text">
+			<span class="testSpan" data-model="1">2</span>
+		</div>
+	</div>
+	
+	<script>
+		(function($){
+			
+			var $inputs1=$('#div1').find('>.testDiv>input');
+			console.log($inputs1);
+			
+			var $span1=$('#div1').find('>.testDiv>div>span.testSpan');
+			console.log($span1);
+			
+			var $span2=$('#div1').find('span');
+			console.log($span2);
+			
+			var $span3=$('#div1').find('span').filter('[data-model=1]');
+			console.log($span3);
+			
+			var $inputs2=$('#div1').find(':text');
+			console.log($inputs2);
+			
+		}(jQuery));
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>test simple plugin manager</title>
+    
+    <script src="../../jquery/jquery-1.11.1.js"></script>
+    
+    <script src="../condition/condition.js"></script>
+    <script src="simplepluginmanager.js"></script>
+</head>
+<body>
+    <script>
+
+        //create a plugin
+        (function ($) {
+            $.pluginManager.extend('test', {
+                init: init
+            });
+
+            function init() {
+                var $container = this.eq(0),
+                    value1 = arguments[0],
+                    value2 = arguments[1].val,
+                    value3 = arguments[2];
+
+                alert(value1);
+                alert(value2);
+                alert(value3);
+
+                return this;
+            }
+        }(jQuery));
+
+        //use filter to add default value
+        (function ($) {
+            $.pluginManager.filter('test', {
+                init: function () {
+                    var $selector = this;
+
+                    return [
+                        arguments[0] || 1,
+                        $.extend({ val: 2 }, arguments[1]),
+                        $.extend([1, 2, 3], arguments[2])
+                    ];
+                }
+            });
+        }(jQuery));
+
+        //use plugin
+        $(function () {
+            $().test('init', 3, {});
+        });
+    </script>
+</body>
+</html>

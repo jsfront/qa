@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test eq</title>
+	
+	<script src="../jquerycore/jquerycore.js"></script>
+	
+	<script src="eq.js"></script>
+</head>
+<body>
+	
+	<div class="test">1</div>
+	<div class="test">2</div>
+	
+	<script>
+		(function($){
+		
+			console.log($('.test').eq(1));
+			
+		}(jQuery));
+	</script>
+	
+</body>
+</html>
