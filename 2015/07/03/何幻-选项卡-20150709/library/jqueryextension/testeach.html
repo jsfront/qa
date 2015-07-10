@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test each</title>
+	
+	<script src="../jquerycore/jquerycore.js"></script>
+	
+	<script src="each.js"></script>
+</head>
+<body>
+	
+	<input type="text" value="1" />
+	<input type="text" value="2" />
+	<input type="text" value="3" />
+	
+	<script>
+		(function($){
+			
+			$('input').each(function(){
+				var htmlInput=this;
+				
+				alert(htmlInput.value);
+			});
+			
+		}(jQuery));
+	</script>
+</body>
+</html>

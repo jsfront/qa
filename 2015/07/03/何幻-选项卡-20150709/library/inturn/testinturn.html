@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test inturn</title>
+	
+	<script src="inturn.js"></script>
+</head>
+<body>
+	
+	<script>
+		(function(){
+			
+			var inturn=new Inturn(3);
+			console.log(inturn.getIndex());
+			
+			inturn.setIndex(2);
+			console.log(inturn.next().getIndex());
+			console.log(inturn.next().getIndex());
+			console.log(inturn.prev().getIndex());
+			
+		}());
+	</script>
+	
+</body>
+</html>

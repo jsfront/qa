@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf8" />
+    <title>选项卡</title>
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    ul{
+        margin: 100px 0 0 100px;
+        list-style: none;
+        position: relative;
+    }
+    li{
+        border:1px solid red;
+        float: left;
+        height: 18px;
+        padding: 5px 7px;
+    }
+    li div{
+        border:1px solid black;
+        position: absolute;
+        width: 143px;
+        height: 200px;
+        top:32px;
+        left: 0px;
+        overflow: hidden;
+    }
+    div.second{
+        display: none;
+    }
+    div.third{
+        display: none;
+    }
+</style>
+</head>
+<body>
+    <ul id="tag">
+        <li>国内
+            <div class="first">12313asdfsf</div>
+        </li>
+        <li>国际
+            <div class="second">asdfsf234235</div>
+        </li>
+        <li>时事
+            <div class="third">asdsdafaf97897sf</div>
+        </li>
+    </ul>
+    <script type="text/javascript">
+    function $(ID){
+        return document.getElementById(ID);
+    }
+    function getStyle(obj,attr){
+        if(obj.currentStyle){
+            return obj.currentStyle[attr];
+        }else{
+            return document.defaultView.getComputedStyle(obj,false)[attr];
+        }
+    }
+    function startMove(obj,attr,target){
+        clearInterval(obj.timer);
+        
+        var isSpeed,iCur;
+        obj.timer = setInterval(function(){
+            iCur = parseInt(getStyle(obj,attr));
+            isSpeed = (target-iCur)/8;
+            isSpeed = isSpeed>0?Math.ceil(isSpeed):Math.floor(isSpeed);
+            if(iCur==target){
+                clearInterval(obj.timer);
+            }else{
+                obj.style[attr] = (iCur+isSpeed)+"px";
+            }
+        },30);
+    }
+    var tag = $("tag");
+    var isShow = 0;
+    var tagLis = tag.getElementsByTagName("li");
+    var divContents = tag.getElementsByTagName("div");
+    for(var i=0,len=tagLis.length;i<len;i++){
+        tagLis[i].index = i;
+        tagLis[i].onclick = function(){
+            if(isShow!=this.index){
+                // 
+                for(var j = 0;j<len;j++){
+                    if(j!=this.index){
+                        divContents[j].style.display="none";
+                    }
+                }
+                var div = this.children[0];
+                div.style.width="0px";
+                div.style.display="block";
+                startMove(div,"width",143);
+                isShow = this.index;
+            }else{
+                return ;
+            }
+     
+        }
+    }
+    </script>
+</body>
+</html>

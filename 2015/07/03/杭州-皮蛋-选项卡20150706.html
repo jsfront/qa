@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>collect card</title>
+	<style>
+		/*reset style*/
+		body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre, 
+		form,fieldset,input,textarea,p,blockquote,th,td { 
+		    padding: 0; 
+		    margin: 0; 
+		} 
+		table { 
+		    border-collapse: collapse; 
+		    border-spacing: 0; 
+		} 
+		fieldset,img { 
+		    border: 0; 
+		} 
+		address,caption,cite,code,dfn,em,strong,th,var { 
+		    font-weight: normal; 
+		    font-style: normal; 
+		} 
+		ol,ul { 
+		    list-style: none; 
+		} 
+		caption,th { 
+		    text-align: left; 
+		} 
+		h1,h2,h3,h4,h5,h6 { 
+		    font-weight: normal; 
+		    font-size: 100%; 
+		} 
+		q:before,q:after { 
+		    content:”; 
+		} 
+		abbr,acronym { 
+		    border: 0; 
+		}
+
+		.container {
+			width: 500px;
+			height: 300px;
+			margin: 100px auto;
+			font-size: 30px;
+			color: #fff;
+			-moz-box-shadow:0px 0px 10px #333333; 
+			-webkit-box-shadow:0px 0px 10px #333333; 
+			box-shadow:0px 0px 10px #333333;
+			overflow: hidden;
+			position: relative;
+		}
+
+		li {
+			float: left;
+			cursor: pointer;
+		}
+
+		.tab {
+			height: 50px;
+			width: 100%;
+		}
+
+		.collection {
+			height: 250px;
+			width: 2000px;
+			position: absolute;
+			left: 0;
+			top: 50px;
+		}
+
+		.tab li {
+			line-height: 50px;
+			width: 25%;
+			text-align: center;
+			color: #ff7256;
+		}
+
+		.tab li.active {
+			background-color: #ff7256;
+			color: #fff;
+		}
+		.tab li:hover {
+			background-color: #ff7256;
+			color: #fff;
+		}
+
+		.collection li {
+			width: 500px;
+			line-height: 250px;
+			text-align: center;
+			background-color: #cd7054;
+		}
+	</style>
+	<script>
+		/* Process-oriented start */
+		window.onload = function() {
+			new construct("tabId", "collectionId"); //oritend object
+			
+			// if (!document.getElementById) return false;
+			// if (!document.getElementsByTagName) return false;
+			// var oTab = document.getElementById("tabId");
+			// var oCollection = document.getElementById("collectionId");
+			// var aTabLi = oTab.getElementsByTagName("li");
+			// var whichTab = null;
+			// for (var i = 0; i < aTabLi.length; i++) {
+			// 	aTabLi[i].index = i;
+			// 	if (aTabLi[i].getAttribute("class") == "active") {
+			// 		whichTab = aTabLi[i];
+			// 	}
+			// 	aTabLi[i].onclick = function() {
+			// 		aTabLi[whichTab.index].className="";
+			// 		this.className = "active";
+			// 		move(oCollection, "left" , -500*this.index);
+			// 		whichTab = this;
+			// 	};
+			// }
+		};
+		function move(obj , attr, target) {
+			clearInterval(obj.timer);
+			var speed =0;
+			obj.timer = setInterval(function() {
+				var getAttr = parseInt(getStyle(obj, attr));
+				speed = (target - getAttr) / 6;
+				
+				if (speed < 0) {
+					speed = parseInt(Math.floor(speed));
+				} else {
+					speed = parseInt(Math.ceil(speed));
+				}
+
+				obj.style[attr] = getAttr + speed +'px';
+				 if (target == parseInt(getStyle(obj, attr))) {
+				 	clearInterval(obj.timer);
+				 }
+			}, 30);
+		}
+
+		function getStyle(obj, attr) {
+			return getComputedStyle? getComputedStyle(obj, null)[attr]:obj.currentStyle[attr];
+		}
+
+		/* Process-oriented end */
+
+		/* Object-Oriented start*/
+		function construct(idTab, idCollection) {
+			if (!document.getElementById) return false;
+			if (!document.getElementsByTagName) return false;
+			var oTab = document.getElementById(idTab);
+			var oCollection = document.getElementById(idCollection);
+			var aTabLi = oTab.getElementsByTagName("li");
+			var whichTab = null;
+			for (var i = 0; i < aTabLi.length; i++) {
+				aTabLi[i].index = i;
+				if (aTabLi[i].getAttribute("class") == "active") {
+					whichTab = aTabLi[i];
+				}
+				aTabLi[i].onclick = function() {
+					aTabLi[whichTab.index].className="";
+					this.className = "active";
+					move(oCollection, "left" , -500*this.index);
+					whichTab = this;
+				};
+			}
+		}
+		/* Object-Oriented end*/
+
+
+	</script>
+</head>
+<body>
+	<div class="container">
+		<ul class="tab" id="tabId">
+			<li class="active">First</li>
+			<li>Second</li>
+			<li>Third</li>
+			<li>Fourth</li>
+		</ul>
+		<ul class="collection" id="collectionId">
+			<li>Content of First</li>
+			<li>Content of Second</li>
+			<li>Content of Third</li>
+			<li>Content of Fourth</li>
+		</ul>
+	</div>
+</body>
+</html>

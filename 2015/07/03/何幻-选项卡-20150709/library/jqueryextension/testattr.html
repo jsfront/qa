@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test attr</title>
+	
+	<script src="../jquerycore/jquerycore.js"></script>
+	
+	<script src="each.js"></script>
+	<script src="attr.js"></script>
+</head>
+<body>
+	
+	<input type="text" id="text1">
+	
+	<script>
+		(function($){
+			
+			$('#text1').attr('data-model','1');
+			
+			setTimeout(function(){
+				$('#text1').removeAttr('data-model');
+			},2000);
+			
+		}(jQuery));
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>test condition</title>
+    <script src="condition.js"></script>
+</head>
+<body>
+    <script>
+        (function () {
+            var condition = new window.Condition();
+
+            condition.add(1, 2, 'a');
+            condition.add(1, 3, 'b');
+            condition.add(2, 3, 'c');
+
+            condition.remove(1, 3);
+
+            var data1 = condition.find(1, 2),
+                data2 = condition.find(1, 3),
+                data3 = condition.find(2, 3);
+
+            alert(data1);
+            alert(data2);
+            alert(data3);
+        }());
+
+    </script>
+</body>
+</html>

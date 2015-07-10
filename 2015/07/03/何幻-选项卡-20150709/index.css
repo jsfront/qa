@@ -1,0 +1,51 @@
+body{
+	margin:0;
+	padding:0;
+}
+
+/* inturn dot */
+.inturn-dot{
+	display:table;
+	width:100%;
+	margin-top:50px;
+}
+.inturn-dot>div{
+	display:table-cell;
+	text-align:center;
+}
+
+.inturn-dot>div>span{
+	font-size:50px;
+	background:gray;
+	width:40px;
+	height:40px;
+	border-radius:20px;
+	display:inline-block;
+	margin:0 10px;
+}
+.active{
+	background:sienna !important;
+}
+
+/* inturn block */
+.inturn-block{
+	width:700px;
+	height:500px;
+	margin:0 auto;
+	overflow:hidden;
+	margin-top:50px;
+}
+.inturn-block>div{
+	height:500px;
+	background: sienna;
+	font-size:50px;
+	color:white;
+	position:relative;
+	display:none;
+	text-align:center;
+	line-height:500px;
+	font-size:100px;
+}
+.show{
+	display:block !important;
+}

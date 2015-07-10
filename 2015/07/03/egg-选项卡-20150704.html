@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡</title>
+	<meta name="viewport" content="initial-scale=1">
+	<style>
+		*{
+			margin: 0; 
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		.show{
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			margin: 10px auto 0;
+			transition: background-color 0.7s;
+			line-height: 200px;
+			text-align: center;
+			color: rgba(147, 76, 222, 0.7);
+		}
+		.show.red{
+			background-color: red;
+		}
+		.show.yellow{
+			background-color: yellow;
+		}
+		.show.green{
+			background-color: green;
+		}
+		.control{
+			margin-top: 30px;
+			text-align: center;
+		}
+		.control button{
+			padding: 10px 20px;
+			border: 2px solid #784CA8;
+			border-radius: 5px;
+			margin: 0 15px;
+			cursor: pointer;
+			background-color: #C8ADE9;
+		}
+		.control button:hover{
+			background-color: #A283C9;
+		}
+		.control button.active{
+			background-color: #934CDE;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="show red">触屏可滑动</div>
+		<div class="control">
+			<button type="button" data-color="red" data-index="1" class="active">red</button><!--
+		 --><button type="button" data-color="yellow" data-index="2">yellow</button><!--
+		 --><button type="button" data-color="green" data-index="3">green</button>
+		</div>
+	</div>
+
+<script>
+/*
+	(function () {
+		var tab = {
+			btnGroup: document.querySelector(".control"),
+			show: document.querySelector(".show"),
+			active: document.querySelector(".control .active"),
+			touStart: {
+				posX: 0,
+				posY: 0,
+				movX: 0,
+				movY: 0
+			},
+			colorTransform: function (e) {
+				var target = e.target;
+				if (target.tagName.toLowerCase() != "button") {
+					return false;
+				}
+				tab.show.className = "show " + target.dataset.color;
+				tab.active.classList.remove("active");
+				target.classList.add("active");
+				tab.active = target;
+			},
+			nextColor: function (bool) {
+				if (bool) {
+					var next = tab.active.nextElementSibling || tab.btnGroup.firstElementChild;
+				} else {
+					var next = tab.active.previousElementSibling || tab.btnGroup.lastElementChild;
+				}
+				tab.show.className = "show " + next.dataset.color;
+				tab.active.classList.remove("active");
+				next.classList.add("active");
+				tab.active = next;
+			},
+			startHandler: function (e) {
+				if(event.targetTouches.length > 1) {
+					return false;
+				}
+				var touch = e.targetTouches[0];
+				tab.touStart.posX = touch.pageX;
+				tab.touStart.posY = touch.pageY;
+				this.addEventListener('touchmove', tab.moveHandler, false);
+				this.addEventListener('touchend', tab.endHandler, false);
+			},
+			moveHandler: function(e){
+				var touch = e.targetTouches[0];
+				tab.touStart.movX = touch.pageX - tab.touStart.posX;
+				tab.touStart.movY = touch.pageY - tab.touStart.posY;
+			},
+			endHandler: function(e){
+				if(Math.abs(tab.touStart.movX) < 30){
+					return false;
+				}
+
+				if(tab.touStart.movX >= 30){
+					tab.nextColor(true);
+				} else {
+					tab.nextColor(false);
+				}
+				this.removeEventListener('touchmove', tab.moveHandler, false);
+				this.removeEventListener('touchend', tab.endHandler, false);
+			},
+			init: function () {
+				tab.show.addEventListener("touchstart", tab.startHandler, false);
+				tab.btnGroup.addEventListener("click", tab.colorTransform, false);
+			}
+		};
+		tab.init();
+	}());
+*/
+
+
+	(function () {
+		var Tab = function (dom) {
+			this.show = dom.querySelector(".show");
+			this.btnGroup = dom.querySelector(".control");
+			this.active = this.btnGroup.querySelector(".active");
+			this.touStart = {
+				posX: 0,
+				posY: 0,
+				movX: 0,
+				movY: 0
+			};
+		};
+		Tab.prototype = {
+			constructor: Tab,
+			clickHandler: function (e) {
+				var target = e.target;
+				if (target.tagName.toLowerCase() != "button") {
+					return false;
+				}
+				this.show.className = "show " + target.dataset.color;
+				this.active.classList.remove("active");
+				target.classList.add("active");
+				this.active = target;
+			},
+			nextColor: function (bool) {
+				if (bool) {
+					var next = this.active.nextElementSibling || this.btnGroup.firstElementChild;
+				} else {
+					var next = this.active.previousElementSibling || this.btnGroup.lastElementChild;
+				}
+				this.show.className = "show " + next.dataset.color;
+				this.active.classList.remove("active");
+				next.classList.add("active");
+				this.active = next;
+			},
+			startHandler: function (e) {
+				if(event.targetTouches.length > 1) {
+					return false;
+				}
+				var target = e.target,
+					touch = e.targetTouches[0];
+				this.touStart.posX = touch.pageX;
+				this.touStart.posY = touch.pageY;
+			},
+			moveHandler: function(e){
+				var touch = e.targetTouches[0];
+				this.touStart.movX = touch.pageX - this.touStart.posX;
+				this.touStart.movY = touch.pageY - this.touStart.posY;
+			},
+			endHandler: function(e){
+				if(Math.abs(this.touStart.movX) < 30){
+					return false;
+				}
+				var target = e.target;
+				if(this.touStart.movX >= 30){
+					this.nextColor(true);
+				} else {
+					this.nextColor(false);
+				}
+				this.touStart = {
+					posX: 0,
+					posY: 0,
+					movX: 0,
+					movY: 0
+				};
+			},
+			init: function () {
+				this.show.addEventListener("touchstart", this.startHandler.bind(this), false);
+				this.show.addEventListener('touchmove', this.moveHandler.bind(this), false);
+				this.show.addEventListener('touchend', this.endHandler.bind(this), false);
+				this.btnGroup.addEventListener("click", this.clickHandler.bind(this), false);
+			}
+		};
+		var wrap = new Tab(document.querySelector(".wrap"));
+		wrap.init();
+	}());
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+        a:visited {
+            color: inherit;
+        }
+        .container {
+            width: 500px;
+            padding: 10px;
+            margin: 0 auto;
+        }
+        .tab {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        .tab .tab_nav ul {
+            list-style: none;
+            margin: 0px;
+        }
+        .tab .tab_nav ul li {
+            display: inline-block;
+        }
+        .tab .tab_nav ul li a {
+            padding: 5px 20px;
+            line-height: 25px;
+            border: 1px solid #eee;
+            border-radius: 3px 3px 0px 0px;
+        }
+        .tab .tab_content {
+            border: 1px solid #eee;
+            min-height: 200px;
+        }
+        .tab .tab_content > div {
+            width: 100%;
+            padding: 10px;
+            position: absolute;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="tab1" class="tab">
+        <div class="tab_nav">
+            <ul>
+                <li><a href="#a">A</a></li>
+                <li class="active"><a href="#b">B</a></li>
+                <li><a href="#c">C</a></li>
+            </ul>
+        </div>
+        <div class="tab_content">
+            <div id="a">This is A.</div>
+            <div id="b">This is B.</div>
+            <div id="c">This is C.</div>
+        </div>
+    </div>
+    <div id="tab2" class="tab">
+        <div class="tab_nav">
+            <ul>
+                <li><a href="#aa">A</a></li>
+                <li class="active"><a href="#bb">B</a></li>
+                <li><a href="#cc">C</a></li>
+            </ul>
+        </div>
+        <div class="tab_content">
+            <div id="aa">This is A.</div>
+            <div id="bb">This is B.</div>
+            <div id="cc">This is C.</div>
+        </div>
+    </div>
+</div>
+<script>
+    var Tab = function (tab_id) {
+        var afantab = {};
+
+        afantab.tab = document.querySelector('.tab' + tab_id);
+        afantab.tab_nav = afantab.tab.querySelectorAll('.tab_nav li');
+        afantab.tab_content = afantab.tab.querySelector('.tab_content');
+        afantab.showHide = function (tab) {
+            var o = tab.style.opacity;
+            switch (o) {
+                case '0':
+                    (function show(o) {
+                        if (o > 10) {
+                            return false;
+                        }
+                        window.setTimeout(function () {
+                            tab.style.opacity = o / 10;
+                            o++;
+                            show(o);
+                        }, 20);
+                    })(o);
+                    break;
+                case '1':
+                    o *= 10;
+                    (function hide(o) {
+                        if (o < 0) {
+                            return false;
+                        }
+                        window.setTimeout(function () {
+                            tab.style.opacity = o / 10;
+                            o--;
+                            hide(o);
+                        }, 20);
+                    })(o);
+                    break;
+            }
+        };
+        afantab.init = function () {
+            for (var i = 0; i < afantab.tab_nav.length; i++) {
+                var tab_id = afantab.tab_nav[i].querySelector('a').getAttribute('href'),
+                        tab = afantab.tab_content.querySelector(tab_id);
+                if (afantab.tab_nav[i].className != 'active') {
+                    tab.style.opacity = 0;
+                } else {
+                    tab.style.opacity = 1;
+                }
+
+                (function (i, tab) {
+                    afantab.tab_nav[i].addEventListener('click', function (event) {
+                        event.preventDefault();
+                        if (afantab.tab_nav[i].className == 'active') {
+                            return false;
+                        }
+                        for (var j = 0; j < afantab.tab_nav.length; j++) {
+                            if (afantab.tab_nav[j].className == 'active') {
+                                afantab.tab_nav[j].className = '';
+                                afantab.showHide(afantab.tab_content.querySelector(afantab.tab_nav[j].querySelector('a').getAttribute('href')));
+                            }
+                        }
+                        afantab.tab_nav[i].className = 'active';
+                        afantab.showHide(tab);
+                    });
+                })(i, tab);
+            }
+        };
+
+        return afantab;
+    };
+
+    var tab1 = new Tab('#tab1');
+    tab1.init();
+    var tab2 = new Tab('#tab2');
+    tab2.init();
+</script>
+</body>
+</html>
