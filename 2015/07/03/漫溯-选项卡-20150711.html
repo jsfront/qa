@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title></title>
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		transition: all .5s;
+	}
+	body {
+		background-color: #ddd;
+	}
+	.wrapper {
+		margin-top: 100px;
+	}
+	#first, #second {
+		float: left;
+		width: 300px;
+		margin-left: 50px;
+		overflow: hidden;
+	}
+	.tab-heading {
+		height: 30px;
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	.tab-heading ul {
+		list-style: none;
+		border-bottom: 1px solid #999;
+	}
+	.tab-heading ul::after {
+		content: "";
+		display: block;
+		clear: both;
+	}
+	.tab-heading ul li {
+		float: left;
+		display: block;
+		width: 25%;
+		text-align: center;
+		line-height: 30px;
+		border-bottom: 2px solid transparent;
+		cursor: pointer;
+	}
+	.tab-heading ul li:hover {
+		border-bottom: 2px solid #999;
+	} 
+	.tab-heading ul .active {
+		border-bottom: 2px solid #999;
+	}
+	.tab-body div {
+		display: none;
+		padding: 5px;
+	}
+	.tab1 {
+		background-color: #e08364;
+	}
+	.tab2 {
+		background-color: #e2e521;
+	}
+	.tab3 {
+		background-color: #ea4325;
+	}
+	.tab4 {
+		background-color: #e746ac;
+	}
+
+	#second .tab-body {
+		position: relative;
+		width: 300px;
+		height: 300px;
+	}
+	#second .wrap {
+		width: 1240px;
+		height: 300px;
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#second .wrap div {
+		display: block;
+		width: 300px;
+		height: 300px;
+		float: left;
+	}
+
+	</style>
+</head>
+<body>
+<section class="wrapper">
+	<div id="first">
+		<div class="tab-heading">
+			<ul>
+				<li>tab1</li>
+				<li>tab2</li>
+				<li>tab3</li>
+				<li>tab4</li>
+			</ul>
+		</div>
+		<div class="tab-body">
+			<div class="tab1">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>
+			<div class="tab2">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>
+			<div class="tab3">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>
+			<div class="tab4">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>
+		</div>		
+	</div>
+	<div id="second">
+			
+	</div>
+</section>
+
+<script type="text/javascript">
+	window.onload = function(){
+		// 过程 start
+		(function(){
+			var lists = document.querySelectorAll('#first .tab-heading ul li');
+			var contents = document.querySelectorAll('#first .tab-body div');
+			lists[0].className = 'active';
+			contents[0].style.display = 'block';
+			for (var i = 0; i < lists.length; i++) {
+				lists[i].index = i;
+
+				lists[i].onclick = function(){
+					for(var j = 0; j < lists.length; j++){
+						lists[j].className = '';
+						contents[j].style.display = 'none';
+					}
+					this.className = 'active';
+					contents[this.index].style.display = 'block';
+				}
+			};
+		})();
+		//过程 end
+
+		//对象 start
+		var content = [
+			{ 'tab' : 'tag1', 'contents' : '春江潮水连海平' },
+			{ 'tab' : 'tag2', 'contents' : '海上明月共潮升' },
+			{ 'tab' : 'tag3', 'contents' : '滟滟随波千万里' },
+			{ 'tab' : 'tag4', 'contents' : '何处春江无月明' }
+		];
+		function tabList(id, content){
+			this.id = id;
+			this.content = content;
+			this.init();
+		}
+		tabList.prototype.create = function(){
+			var oParent = document.createElement('div');
+			var oHeading = document.createElement('div');
+			oHeading.className = 'tab-heading';
+
+			var oUl = document.createElement('ul');
+
+			var oWrap = document.createElement('div');
+			oWrap.className = 'wrap';
+			var oBody = document.createElement('div');
+			oBody.className = 'tab-body';
+			oBody.appendChild(oWrap);
+
+			var len = this.content.length;
+
+			for(var i = 0; i < len; i++){
+				var oLi = document.createElement('li');
+				oLi.appendChild(document.createTextNode(content[i].tab))
+				oUl.appendChild(oLi);
+				oHeading.appendChild(oUl);
+
+				var oDiv = document.createElement('div');
+				oDiv.appendChild(document.createTextNode(content[i].contents));
+				oWrap.appendChild(oDiv);
+			}
+
+			var wrapper = document.querySelector('#'+this.id+'');
+			console.log(wrapper);
+			wrapper.appendChild(oHeading);
+			wrapper.appendChild(oBody);	
+
+			this.change();
+		}
+		tabList.prototype.change = function(){
+			var tabEle = document.querySelector('#'+this.id+'');
+			var tabHead = tabEle.querySelectorAll('ul>li');
+			var tabWrap = tabEle.querySelector('.wrap');
+			tabHead[0].className = 'active';
+			for(var i = 0; i < tabHead.length; i++){
+				tabHead[i].index = i;
+				tabHead[i].onclick = function(){
+					for(var j = 0; j < tabHead.length; j++){
+						tabHead[j].className = '';
+					}
+					this.className = 'active';
+					tabWrap.style.left = -300*parseInt(this.index)+'px';
+				}
+			}
+
+		}
+
+		tabList.prototype.init = function(){
+			this.create();
+		}
+		//对象 end
+		
+		var list = new tabList('second', content);
+
+	}
+</script>
+</body>
+</html>
