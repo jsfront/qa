@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge|chrome=1" />
+    <meta name="author" content="fcdcyy@sina.cn">
+    <meta name="Copyright" content="JKD TEAM">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimal-ui">
+    <meta http-equiv="cache-control" content="no-siteapp"/>
+    <title>Tabs选项卡</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="dns-prefetch" href="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-size: 12px;
+            color: #666;
+        }
+        ul, li {
+            list-style: none;
+        }
+        h3{
+            max-width: 750px;
+            margin: 50px auto 0;
+        }
+        h3 span{
+            font-size: 12px;
+            font-weight: normal;;
+        }
+        .tabs{
+            max-width: 750px;
+            margin: 20px auto 0;
+            border: 1px solid #ddd;
+            text-align: center;
+            background: #f5f5f5;
+        }
+        .tabs .hd{
+            height: 30px;
+            line-height: 30px;
+            background: #fefefe; /* Old browsers */
+            background: -moz-linear-gradient(top,  #fefefe 1%, #f1f1f1 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#fefefe), color-stop(100%,#f1f1f1)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  #fefefe 1%,#f1f1f1 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  #fefefe 1%,#f1f1f1 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  #fefefe 1%,#f1f1f1 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  #fefefe 1%,#f1f1f1 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#f1f1f1',GradientType=0 ); /* IE6-9 */
+            border-bottom: 1px solid #ddd;
+        }
+        .tabs .hd li{
+            float: left;
+            height: 30px;
+            padding: 0 10px;
+            margin: 0 0 0 -1px;
+            cursor: pointer;
+        }
+        .tabs .hd li.on,.tabs .hd li.active{
+            border-left: solid 1px #d5d5d5;
+            border-right: solid 1px #d5d5d5;
+            border-top: solid 2px #ff6600;
+            background: #fff;
+            height: 30px;
+            line-height: 27px;
+            color: #3366cc;
+        }
+        .tabs .bd{
+            padding: 100px 0;
+        }
+        .tabs .bd li{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<h3>这是普通的写法</h3>
+<div class="tabs" id="tabs">
+    <div class="hd" id="hd">
+        <ul>
+            <li class="on">选项一</li>
+            <li>选项二</li>
+            <li>选项三</li>
+        </ul>
+    </div>
+    <div class="bd" id="bd">
+        <ul>
+            <li>内容一</li>
+            <li>内容二</li>
+            <li>内容三</li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //        普通写法
+    window.onload = (function(){
+        var tabs = document.getElementById('tabs');
+        var hd = document.getElementById('hd');
+        var bd = document.getElementById('bd');
+        var hdList = hd.getElementsByTagName('li');
+        var bdList = bd.getElementsByTagName('li');
+//            先隐藏bd中的内容
+        for(var i = 0; i < bdList.length; i++){
+            bdList[i].style.display = 'none';
+        }
+//            获取当前选中的索引值
+        var oIndex = 0;
+        for(var i in hdList){
+            if(hdList[i].nodeType == 1) {
+                if (hdList[i].getAttribute("class") == 'on') {
+                    oIndex = i;
+                }
+            }
+        }
+//            显示默认显示的内容
+        bdList[oIndex].style.display = 'block';
+//            点击事件
+        for(var i = 0; i < hdList.length; i++){
+            hdList[i].index = i;
+            hdList[i].onclick = function(){
+                for(var i = 0; i < hdList.length; i++) {
+                    bdList[i].style.display = 'none';
+                    hdList[i].className = '';
+                }
+                this.className = 'on';
+                bdList[this.index].style.display = 'block';
+            }
+        }
+    })()
+</script>
+
+
+
+<h3>这是面向对象的写法<span>(默认效果)</span></h3>
+<div class="tabs" id="tabs2">
+    <div class="hd">
+        <ul>
+            <li class="on">选项一</li>
+            <li>选项二</li>
+            <li>选项三</li>
+        </ul>
+    </div>
+    <div class="bd">
+        <ul>
+            <li>内容一</li>
+            <li>内容二</li>
+            <li>内容三</li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+<h3><span>(综合效果)</span></h3>
+<div class="tabs" id="tabs3">
+    <div class="hd">
+        <ul>
+            <li class="on">选项一</li>
+            <li>选项二</li>
+            <li>选项三</li>
+        </ul>
+    </div>
+    <div class="bd">
+        <ul>
+            <li>内容一</li>
+            <li>内容二</li>
+            <li>内容三</li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function(){
+        //初始效果
+        var oTab2 = new Tabs('#tabs2');
+        //综合效果
+        var oTab3 = new Tabs('#tabs3', {
+            on : 'on',      //当前标题选中的样式名，默认为 on
+            trigger : 'mouseover',      //触发方式，默认为 click
+            autoPlay : true,       //是否自动轮播，默认为false
+            effect : 'fade',        //切换效果，默认为空，可选参数为 fade
+            interTime : 2000,       //自动轮播自动运行的间隔，默认为3000
+            hd : '.hd li',      //导航元素对象，默认为  .hd li
+            bd : '.bd li',      //切换内容对象，默认为  .bd li
+            delayTime : '1500'       //切换效果持续时间，默认值为600
+        });
+    };
+    function Tabs(selector, config){
+        this.config = config || {};
+        this.oId = document.querySelector(selector);
+        this.hdList = this.oId.querySelectorAll(this.config.hd || '.hd li');
+        this.bdList = this.oId.querySelectorAll(this.config.bd || '.bd li');
+        this.on = this.config.on || 'on';
+        this.len = this.hdList.length;
+        this.trigger = this.config.trigger || 'click';
+        this.oIndex = 0;
+        this.timer = this.config.interTime || 3000;
+        this.setTime = null;
+        this.delayTime = this.config.delayTime || 600;
+        this.aP = this.config.autoPlay || false;
+        this.oo = null;
+        this.init();
+    };
+    Tabs.prototype.init = function(){
+        var T = this;
+        for(var i = 0; i < this.len; i++){
+            this.hdList[i].index = i;
+            this.hdList[i].addEventListener ? this.hdList[i].addEventListener(T.trigger, function(){
+                this.oo ? clearInterval(T.setTime) : false;
+                T.change(this);
+            }, false)  :  this.hdList[i].attachEvent('on' + T.trigger, function(){
+                this.oo ? clearInterval(T.setTime) : false;
+                T.change(this);
+            }, false);
+        }
+        T.hide(T.on);
+        T.aP ? T.autoPlay() : false;
+    };
+    //        触发事件
+    Tabs.prototype.change = function(obj) {
+        clearInterval(this.setTime);
+        clearInterval(this.setI);
+        for(var i = 0; i < this.len; i++) {
+            this.bdList[i].style.display = 'none';
+            this.hdList[i].className = '';
+        }
+        obj.className = this.on;
+        this.bdList[obj.index].style.display = 'block';
+        this.oIndex = obj.index;
+        this.config.effect ? this.effect() : false;
+    };
+    //            隐藏bd中的内容,并显示默认的内容
+    Tabs.prototype.hide = function() {
+        var T = this;
+        for(var i = 0; i < T.len; i++){
+            T.bdList[i].style.display = 'none';
+        }
+        //            获取当前选中的索引值
+        for (var j in T.hdList){
+            if(T.hdList[j].nodeType == 1 && T.hdList[j].getAttribute('class') == T.on){
+                T.oIndex = j;
+            }
+        }
+        T.bdList[T.oIndex].style.display = 'block';
+    };
+    //自动轮播
+    Tabs.prototype.autoPlay = function() {
+        var T = this;
+        T.setI = setInterval(function() {
+            if(T.oIndex == T.len - 1){
+                T.oIndex = 0;
+            }else{
+                T.oIndex++;
+            }
+            for(var i = 0; i < T.len; i++) {
+                T.bdList[i].style.display = 'none';
+                T.hdList[i].className = '';
+            }
+            T.hdList[T.oIndex].className = T.on;
+            T.bdList[T.oIndex].style.display = 'block';
+        }, this.timer);
+    };
+    //设置透明度
+    Tabs.prototype.setOpacity = function (ele, opacity) {
+        ele.filters ? ele.style.filter = 'alpha(opacity=' + opacity + ')' : ele.style.opacity = opacity / 100;
+    };
+    //渐变效果
+    Tabs.prototype.effect = function() {
+        var T = this;
+        for(var i = 0; i < T.len; i++){
+            T.setOpacity(T.bdList[i], 0);
+        }
+        var s = 0;
+        T.setTime = setInterval(function(){
+            s += 5;
+            if(s < 100){
+                T.setOpacity(T.bdList[T.oIndex],s);
+            }else{
+                clearInterval(T.setTime);
+                s = 0;
+            }
+        }, T.delayTime/20);
+    };
+</script>
+
+<div style="margin-top: 100px;"></div>
+</body>
+</html>
