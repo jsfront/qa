@@ -22,11 +22,13 @@ body{
 
 ul{
   padding: 0;
+  display: flex;
 }
 .list ul li{
   display: inline-block;
   text-decoration: none;
-  width: 16.2%;
+  flex: 1;
+  padding: 0 3px;
 }
 .list ul li img{
   width: 100%;
