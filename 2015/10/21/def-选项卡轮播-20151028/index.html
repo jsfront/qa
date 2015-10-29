@@ -7,16 +7,22 @@
 	<script type="text/javascript" src="tabcontrol.js"></script>
 </head>
 <body>
-<div class="tabcontrol tab-horizental tab-carousel">
-	<ul class="tab-index">
-      <li class="active" data-target="tab1">Tab1</li>
-      <li class="" data-target="tab2">Tab2</li>
+<div id="mytabcontrol" class="tabcontrol carousel">
+	<ul class="tab-captain horizental">
+      <li class="active" data-target="mytabcontrol" data-switch-to="0">Tab1</li>
+	  <li class="" data-target="mytabcontrol" data-switch-to="1">Tab2</li>
+	  <li class="" data-target="mytabcontrol" data-switch-to="2">Tab3</li>
 	</ul>
-    <div class="tab-item" id="tab1">
-	  some text.
-	</div>
-	<div class="tab-item" id="tab2">
-	  dddddddddd some text
+	<div class="tab-body">
+		<div class="item active">
+		  <img src="1.png" alt="tab1 img"/>
+		</div>
+		<div class="item">
+		  <img src="2.png" alt="tab2 img"/>
+		</div>
+		<div class="item">
+		  <img src="3.png" alt="tab3 img"/>
+		</div>
 	</div>
 </div>
 
