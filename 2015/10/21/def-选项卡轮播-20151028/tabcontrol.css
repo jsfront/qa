@@ -1,0 +1,28 @@
+﻿p.error {
+  color: red;
+}
+.tab-horizental,
+.tab-carousel,
+.active,
+.tabcontrol {
+  display: block;
+  background-color: #eee;
+}
+
+ul.tab-index {
+  list-style: none;
+}
+
+.tab-index li {
+  float: left;
+  background-color: #ccc;
+}
+
+.tab-index li:after {
+  content:" | ";
+}
+
+.tab-item {
+  position: absolute;
+  margin: 20px 0 0 0;
+}
