@@ -50,12 +50,50 @@ function init(){
 	if(/carousel/.test(tabctls[i].getAttribute("class"))){
 	  //setTimeout(carousel(tabctls[i].getAttribute("id")),1000);
 	  //console.log("add carousel");
-	  //setTimeout(carousel(tabctls[i].getAttribute("id"),1),2000);
+	  var tabctl = document.getElementById(tabctls[i].getAttribute("id"));
+      var tabcaps = getElementsByClassName("tab-captain",tabctl);
+	  
+	  //定义全局变量，避免递归死循环
+      items = tabcaps[0].getElementsByTagName("li");
+	  index = 0;
+	  //setTimeout(carousel(items,0),2000);
+	  setTimeout(carousel,2000);
 	}
   }
 }
 
-function tab_click_handler(){
+function switch_to(obj){
+  var pNode = obj.parentNode;
+  var preTab = getElementsByClassName("active",pNode);
+  var tabctl = pNode.parentNode;
+  var items = getElementsByClassName("item",tabctl);
+  var curItemIdx = obj.getAttribute("data-switch-to");
+  //console.log("curItemIdx:"+curItemIdx);
+
+  //从当前选项卡往后轮播
+  index = curItemIdx * 1 + 1;
+  
+  //for(var i=0;i< preTab.length;i++){
+	var preItemIdx = preTab[0].getAttribute("data-switch-to");
+		
+	//console.log("preTab.length:"+preTab.length+":"+preTab[0].innerHTML);
+    preTab[0].className = preTab[0].className.replace(/active/ig,"");
+	//console.log("preTab.length:"+preTab.length);
+	items[preItemIdx].className = items[preItemIdx].className.replace(/active/ig,"");
+  //}
+  
+  /*
+  var subNodes = pNode.childNodes;
+  for(var i=0;i < subNodes.length;i++){
+    if(subNodes[i].hasClass("active")){
+	  subNodes[i].className.replace(/active/,"");
+	}
+  }*/
+  obj.className = obj.className + " active";
+  items[curItemIdx].className = items[curItemIdx].className + " active";
+}
+
+function tab_click_handler(){/*
   //console.log('tab_click');
   var pNode = this.parentNode;
   var preTab = getElementsByClassName("active",pNode);
@@ -79,22 +117,38 @@ function tab_click_handler(){
     if(subNodes[i].hasClass("active")){
 	  subNodes[i].className.replace(/active/,"");
 	}
-  }*/
+  }
   this.className = this.className + " active";
-  items[curItemIdx].className = items[curItemIdx].className + " active";
+  items[curItemIdx].className = items[curItemIdx].className + " active";*/
+  switch_to(this);
 }
 
-function carousel(id,index){
-  var tabctl = document.getElementById(id);
-  var tabcaps = getElementsByClassName("tab-captain",tabctl);
-  var items = tabcaps[0].getElementsByTagName("li");
+function carousel(){
+  //var tabctl = document.getElementById(id);
+  //var tabcaps = getElementsByClassName("tab-captain",tabctl);
+  //var items = tabcaps[0].getElementsByTagName("li");
   //console.log(items.length);
-  if(index > items.length - 1){
-    index = 0;
-  }
+  //if(index > items.length - 1){
+  //  index = 0;
+  //}
   
   //tab_click_handler(items[index++]);
-  items[index].click();
-  index = index + 1;
-  setTimeout(carousel(id,index),2000);
+  //items[index].click();
+  //switch_to(items[index]);
+  var curIdx = index>=items.length?0:index;
+  var preIdx = curIdx-1<0?items.length-1:curIdx-1;
+  //console.log("preIdx:"+preIdx);
+  //console.log("curIdx:"+curIdx);
+  
+  items[preIdx].className = "";
+  items[curIdx].className = "active";
+  
+  //console.log(items[curIdx].parentNode.parentNode.childNodes[3].getElementsByTagName("div")[items[preIdx].getAttribute("data-switch-to")].className);
+  items[preIdx].parentNode.parentNode.childNodes[3].getElementsByTagName("div")[items[preIdx].getAttribute("data-switch-to")].className = "item";
+  items[curIdx].parentNode.parentNode.childNodes[3].getElementsByTagName("div")[items[curIdx].getAttribute("data-switch-to")].className = "item active";
+  
+  index = curIdx + 1;
+  setTimeout(carousel,2000);
+  //alert("carousel opt");
+  //setTimeout(carousel,2000);
 }
