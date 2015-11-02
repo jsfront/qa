@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>图片轮换</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        #maincontent {
+            width: 580px;
+            height: 300px;
+            margin: 100px auto;
+            border: 1px solid;
+            padding: 6.25px 10px;
+        }
+        
+        #menu {
+            width: 201px;
+            height: 50px;
+            margin-bottom: 1px;
+        }
+        
+        #menu li {
+            float: left;
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            background-color: #F3DEC6;
+            text-align: center;
+        }
+        
+        #menu li:first-child {
+            margin-right: 1px;
+        }
+        
+        #menu li[class*="active"] {
+            background-color: #FF9800;
+        }
+        
+        #mainbody {
+            width: 580px;
+            height: 250px;
+        }
+        
+        #body_images {
+            float: left;
+            position: relative;
+            width: 400px;
+            height: 250px;
+        }
+        
+        #body_images li {
+            position: absolute;
+            width: 400px;
+            height: 250px;
+            display: none;
+        }
+        
+        #body_images li[class*="active"] {
+            display: block;
+        }
+        
+        .body_menu {
+            float: right;
+            width: 180px;
+            height: 250px;
+            display: none;
+        }
+        
+        .body_menu[class*="active"] {
+            display: block;
+        }
+        
+        .body_menu li {
+            margin-bottom: 2px;
+            width: 180px;
+            height: 82px;
+            line-height: 82px;
+            text-align: center;
+            background-color: #F3DEC6;
+        }
+        
+        .body_menu li[class*="active"] {
+            background-color: #FF9800;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="maincontent">
+        <ul id="menu">
+            <li class="active">菜单1</li>
+            <li>菜单2</li>
+        </ul>
+        <div id="mainbody">
+            <ul id="body_images">
+                <li class="active"><img src="1.png" /></li>
+                <li><img src="2.png" /></li>
+                <li><img src="3.png" /></li>
+                <li><img src="4.png" /></li>
+                <li><img src="5.png" /></li>
+                <li><img src="6.png" /></li>
+            </ul>
+            <ul class="body_menu active" id="body_menu1">
+                <li class="active">图片1</li>
+                <li>图片2</li>
+                <li>图片3</li>
+            </ul>
+            <ul class="body_menu" id="body_menu2">
+                <li>图片4</li>
+                <li>图片5</li>
+                <li>图片6</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        window.onload=function(){   
+            //取ul与相应的li元素，初始化index(当前第几幅图)
+            var menu=document.getElementById("menu"),
+                menu_li=menu.getElementsByTagName("li"),
+                
+                body_images=document.getElementById("body_images"),
+                body_images_li=body_images.getElementsByTagName("li"),
+                
+                body_menu1=document.getElementById("body_menu1"),
+                body_menu1_li=body_menu1.getElementsByTagName("li"),
+                
+                body_menu2=document.getElementById("body_menu2"),
+                body_menu2_li=body_menu2.getElementsByTagName("li"),
+                
+                index=0;
+            //计时器
+            var imgTimer=setInterval(function(){
+                index++;
+                if(index<3){
+                    changeMenu(body_menu2,body_menu1,body_menu1_li,index);
+                }
+                else if(index<6){
+                    changeMenu(body_menu1,body_menu2,body_menu2_li,index-3);
+                }
+                else{
+                    index=0;
+                    changeMenu(body_menu2,body_menu1,body_menu1_li,index);
+                }
+                changeLiActive(body_images,body_images_li,index);
+            },1000);
+            //改变右侧菜单的active状态和所有菜单中li的active状态
+            function changeMenu(body_menu,body_menu_activity,body_menu_activity_li,current){
+                //改变右侧菜单的active状态
+                body_menu.className="body_menu";
+                body_menu_activity.className="body_menu active";
+                //改变li的active状态
+                changeLiActive(body_menu_activity,body_menu_activity_li,current);
+                //改变上面菜单中li的active状态
+                if(body_menu==body_menu2){
+                    menu_li[0].className="active";
+                    menu_li[1].className="";
+                }else{
+                    menu_li[0].className="";
+                    menu_li[1].className="active";
+                }
+            };
+            //改变li的active状态
+            function changeLiActive(ul,li,i){
+                if(ul.getElementsByClassName("active")[0]){
+                    ul.getElementsByClassName("active")[0].className="";
+                }
+                li[i].className="active";
+            }
+        };
+    </script>
+</body>
+
+</html>
