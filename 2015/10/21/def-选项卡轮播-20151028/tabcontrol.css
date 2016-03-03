@@ -1,0 +1,63 @@
+﻿p.error {
+  color: red;
+}
+
+.carousel {
+  
+}
+
+.tabcontrol {
+  display: block;
+  background-color: #333;
+}
+
+ul.tab-captain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tab-captain > li:first-child {
+  margin-left: 0;
+}
+
+.tab-captain li {
+  background-color: #abe;
+  display: inline;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: 1px;
+  margin-right: 0px;
+  border-radius: 5px 5px 0px 0px;
+  min-width: 45px;
+}
+
+.tab-captain li,
+.tab-captain .horizental li,
+.tab-captain .horizental .top li {
+  float: left;
+}
+
+.tab-captain li.active {
+  background: #aef;
+  font-weight: bold;
+}
+
+.tab-captain li:after {
+  content: "";
+  display: block;
+}
+
+.tab-captain li:hover {
+  cursor: hand;
+}
+
+.tab-body > div.item {
+  position: absolute;
+  margin: 18px 0 0 0;
+  display: none;
+}
+
+.tab-body > div.item[class*=active] {
+  display: block;
+}
