@@ -6,7 +6,7 @@ function cacuWork(data,days,hour=8){
   var needSum=hour*days,sum=0,str='';
   data=data.map(a=>[parseHour(a[0]),parseHour(a[1])]);
   for(let i=0;i<data.length;i++){
-    if(!checkWorkTime(data[i]))continue;//只打卡一次不算工时，直接跳过；
+    if(!checkWorkTime(data[i])){data[i][0]=0;data[i][1]=0}；//只打卡一次不算工时，手动设置为0；
     else{
       if(data[i][0]<=7){ //如果开始时间小于7:00则只算从7:00开始；
         data[i][0]=7;
