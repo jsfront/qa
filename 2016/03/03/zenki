@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+   var countWorkTime = (function() {
+    var MINUTE = 1000 * 60;
+    var HOUR = MINUTE * 60;
+    var CLOCK_0000 = '00:00';
+    var CLOCK_0700 = '07:00'; 
+    var CLOCK_1200 = '12:00'; 
+    var CLOCK_1300 = '13:00'; 
+    var CLOCK_1830 = '18:30'; 
+    var CLOCK_1900 = '19:00'; 
+    var clockList = [CLOCK_1900, CLOCK_1830, CLOCK_1300, CLOCK_1200, CLOCK_0700, CLOCK_0000];
+    var getDateByClock = dateUtil();
+    var CALC_START = getDateByClock(CLOCK_0700);
+    var config = {};
+
+    config[CLOCK_1900] = function(curr) {
+        return HOUR * 1.5;
+    };
+    config[CLOCK_1830] = function(curr) {
+        return HOUR + (curr - getDateByClock(CLOCK_1830));
+    };
+    config[CLOCK_1300] = function(curr) {
+        return HOUR * 1;
+    };
+    config[CLOCK_1200] = function(curr) {
+        return curr - getDateByClock(CLOCK_1200);
+    };
+    config[CLOCK_0700] = function(curr) {
+        return 0;
+    };
+    config[CLOCK_0000] = function(curr) {
+        return curr - CALC_START;
+    };
+
+    function dateUtil() {
+        var cache = {};
+        var now = new Date();
+        var prev = [now.getFullYear(), '-', now.getMonth() + 1, '-', now.getDate(), ' '].join('');
+
+        return function(str) {
+            if(!cache[str]) {
+                cache[str] = new Date(prev + str);
+            }
+            return cache[str];
+        }
+    }
+
+    function calcTime(time) {
+        var curr = getDateByClock(time);
+        var tmp, increment;
+
+        tmp = clockList.find(function(v, i) {
+            return curr >= getDateByClock(v);
+        });
+
+        increment = config[tmp](curr);
+
+        return curr - CALC_START - increment;
+    }
+
+    function calcData(data) {
+        if(Object.prototype.toString.call(data) !== '[object Array]') return 0;
+        if(data.length < 2) return 0;
+        if(getDateByClock(data[0]) > getDateByClock(data[1])) return 0;
+
+        return calcTime(data[1]) - calcTime(data[0]);
+    }
+
+    return function(data, day, standard) {
+        var curr = data.reduce(function(p, n) {
+            return p + calcData(n);
+        }, 0);
+
+        standard = standard || 8;
+
+        return curr / HOUR - day * standard;
+    }
+   })();
+
+    var arr = [];
+    arr.push(assert(countWorkTime, [[['18:50', '21:30']], 1], -5.5));
+    arr.push(assert(countWorkTime, [[['18:40', '19:00']], 1], -8));
+    arr.push(assert(countWorkTime, [[['18:40', '19:30']], 1], -7.5));
+    arr.push(assert(countWorkTime, [[['21:00', '22:30']], 1], -6.5));
+    arr.push(assert(countWorkTime, [[['18:00', '22:30']], 1], -4));
+    arr.push(assert(countWorkTime, [[['22:00']], 1], -8));
+
+    arr.forEach(function(v, i) {
+        if(!v()) console.log(['第', i + 1, '条测试没有通过!'].join(''));
+    });
+
+    function assert(fn, args, result) {
+        return function(){
+            try{
+                return fn.apply(null, args) === result;
+            }catch(e) {
+                return false;
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>
