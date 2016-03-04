@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		span{border: 1px solid #ccc;display: inline-block;height: 25px;line-height: 25px;text-align: center;width: 60px;margin: -1px 0 0 -1px}
+	</style>
+</head>
+<body>
+	<div id="container"></div>
+	<script>
+		window.onload = function(){
+			var container = document.getElementById('container');
+			var i=1,j=1,arr=[],temp;
+			function makeHtml(arr){
+				var html = '';
+				for(var k=0;k<arr.length;k++){
+					html+=arr[k];
+				}
+				container.innerHTML = html;
+			}
+			var timer = setInterval(function(){
+				if(i>9){
+					arr.pop();
+					makeHtml(arr);
+					if(arr.length ==0){
+						makeHtml(temp);
+						clearInterval(timer);
+					}
+				}else{
+					var s = '<span>'+i+'*'+j+'='+i*j+'</span>';
+					i == j && (s+='<br>');
+					arr.push(s);
+					i == 9 && j==9 && (temp = arr.concat());
+					makeHtml(arr);
+					j>=i?(i++,j=1):(j++);
+				}	
+			},100)
+		}
+	</script>
+</body>
+</html>
